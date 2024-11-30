@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduTrail.WebUI", "src\EduTrail.WebUI\EduTrail.WebUI.csproj", "{87FA818D-AEAF-45B0-9202-53AB6C78B234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduTrail.WebUI.Client", "src\EduTrail.WebUI.Client\EduTrail.WebUI.Client.csproj", "{88486C24-DAAF-48B0-8823-EE4714B71E90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduTrail.Domain", "src\EduTrail.Domain\EduTrail.Domain.csproj", "{BB4BAFCC-833A-4FAF-AF17-B4E2FD870853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduTrail.Application", "src\EduTrail.Application\EduTrail.Application.csproj", "{C89D5FF7-5401-46DF-B394-24B013174B08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduTrail.Infrastructure", "src\EduTrail.Infrastructure\EduTrail.Infrastructure.csproj", "{E5EFF256-6D48-4301-8007-27AE06C18033}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5A41C71E-0F5D-45A1-885C-6A3A2AED5330}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87FA818D-AEAF-45B0-9202-53AB6C78B234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87FA818D-AEAF-45B0-9202-53AB6C78B234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87FA818D-AEAF-45B0-9202-53AB6C78B234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87FA818D-AEAF-45B0-9202-53AB6C78B234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88486C24-DAAF-48B0-8823-EE4714B71E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88486C24-DAAF-48B0-8823-EE4714B71E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88486C24-DAAF-48B0-8823-EE4714B71E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88486C24-DAAF-48B0-8823-EE4714B71E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB4BAFCC-833A-4FAF-AF17-B4E2FD870853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB4BAFCC-833A-4FAF-AF17-B4E2FD870853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB4BAFCC-833A-4FAF-AF17-B4E2FD870853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB4BAFCC-833A-4FAF-AF17-B4E2FD870853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C89D5FF7-5401-46DF-B394-24B013174B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C89D5FF7-5401-46DF-B394-24B013174B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C89D5FF7-5401-46DF-B394-24B013174B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C89D5FF7-5401-46DF-B394-24B013174B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5EFF256-6D48-4301-8007-27AE06C18033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5EFF256-6D48-4301-8007-27AE06C18033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5EFF256-6D48-4301-8007-27AE06C18033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5EFF256-6D48-4301-8007-27AE06C18033}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{87FA818D-AEAF-45B0-9202-53AB6C78B234} = {5A41C71E-0F5D-45A1-885C-6A3A2AED5330}
+		{88486C24-DAAF-48B0-8823-EE4714B71E90} = {5A41C71E-0F5D-45A1-885C-6A3A2AED5330}
+		{BB4BAFCC-833A-4FAF-AF17-B4E2FD870853} = {5A41C71E-0F5D-45A1-885C-6A3A2AED5330}
+		{C89D5FF7-5401-46DF-B394-24B013174B08} = {5A41C71E-0F5D-45A1-885C-6A3A2AED5330}
+		{E5EFF256-6D48-4301-8007-27AE06C18033} = {5A41C71E-0F5D-45A1-885C-6A3A2AED5330}
+	EndGlobalSection
+EndGlobal
