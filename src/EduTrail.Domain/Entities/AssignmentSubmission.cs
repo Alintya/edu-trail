@@ -4,7 +4,7 @@ public class AssignmentSubmission
 {
     public Guid Id { get; set; }
     public Guid AssignmentId { get; set; }
-    public string StudentId { get; set; } = string.Empty;
+    public Guid StudentId { get; set; }
     public string SubmissionUrl { get; set; } = string.Empty;
     public DateTime SubmittedAt { get; set; }
     public int? Score { get; set; }
