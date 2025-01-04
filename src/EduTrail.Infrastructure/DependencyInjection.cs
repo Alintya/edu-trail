@@ -1,5 +1,7 @@
-﻿using EduTrail.Infrastructure.Data;
+﻿using EduTrail.Domain.Interfaces;
+using EduTrail.Infrastructure.Data;
 using EduTrail.Infrastructure.Identity;
+using EduTrail.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,13 +19,18 @@ public static class ServiceCollectionExtensions
             options.UseSqlServer(connectionString));
 
         // Register Identity
-        services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
 
         // Register repositories
-        //services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAssignmentRepository, AssignmentRepository>();
+        services.AddScoped<ILearningTrailRepository, LearningTrailRepository>();
+        services.AddScoped<IModuleContentRepository, ModuleContentRepository>();
+        services.AddScoped<ITeacherRepository, TeacherRepository>();
+        services.AddScoped<ITrailModuleRepository, TrailModuleRepository>();
 
         // Infra
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
