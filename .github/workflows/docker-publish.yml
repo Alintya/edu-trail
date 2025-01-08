@@ -10,48 +10,48 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKERFILE_PATH: "src/EduTrail.WebUI/Dockerfile"
-  IMAGE_NAME: "${{ github.repository }}"
+  DOCKERFILE_PATH: 'src/EduTrail.WebUI/Dockerfile'
+  IMAGE_NAME: '${{ github.repository }}'
 
-  PROJECT_ID: "${{ vars.GCR_PROJECT_ID }}"
-  REGISTRY: "${{ vars.GCAR_REPO_LOCATION }}-docker.pkg.dev" # 'europe-west1-docker.pkg.dev'
-  AR_URL: "${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ vars.GCR_SERVICE_NAME }}"
-  SERVICE_ACCOUNT: "${{ secrets.GCWIF_SERVICE_ACCOUNT }}" # 'github-actions-service-account@my-project-id.iam.gserviceaccount.com'
-  WORKLOAD_IDENTITY_PROVIDER: "${{ secrets.GCWIF_PROVIDER }}" # 'projects/123456789/locations/global/workloadIdentityPools/my-app-dev-pool/providers/github-actions-provider'
+  PROJECT_ID: '${{ vars.GCR_PROJECT_ID }}'
+  REGISTRY: '${{ vars.GCAR_REPO_LOCATION }}-docker.pkg.dev' # 'europe-west1-docker.pkg.dev'
+  AR_URL: '${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ vars.GCR_SERVICE_NAME }}'
+  SERVICE_ACCOUNT: '${{ secrets.GCWIF_SERVICE_ACCOUNT }}' # 'github-actions-service-account@my-project-id.iam.gserviceaccount.com'
+  WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.GCWIF_PROVIDER }}' # 'projects/123456789/locations/global/workloadIdentityPools/my-app-dev-pool/providers/github-actions-provider'
 
 jobs:
   push_to_ar:
     permissions:
-      contents: "read"
-      id-token: "write"
+      contents: 'read'
+      id-token: 'write'
 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: "actions/checkout@v4"
+        uses: 'actions/checkout@v4'
 
       - name: Google Auth
         id: auth
-        uses: "google-github-actions/auth@v2"
+        uses: 'google-github-actions/auth@v2'
         with:
-          token_format: "access_token"
-          project_id: "${{ env.PROJECT_ID }}"
-          service_account: "${{ env.SERVICE_ACCOUNT }}"
-          workload_identity_provider: "${{ env.WORKLOAD_IDENTITY_PROVIDER }}"
+          token_format: 'access_token'
+          project_id: '${{ env.PROJECT_ID }}'
+          service_account: '${{ env.SERVICE_ACCOUNT }}'
+          workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
 
       - name: Docker meta
         id: meta
-        uses: "docker/metadata-action@v5"
+        uses: 'docker/metadata-action@v5'
         with:
-          images: "${{ env.IMAGE_NAME }}"
+          images: '${{ env.IMAGE_NAME }}'
 
       - name: Docker Auth
         id: docker-auth
-        uses: "docker/login-action@v3"
+        uses: 'docker/login-action@v3'
         with:
-          username: "oauth2accesstoken"
-          password: "${{ steps.auth.outputs.access_token }}"
-          registry: "${{ env.REGISTRY }}"
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+          registry: '${{ env.REGISTRY }}'
 
       - name: Build and Push Container
         run: |-
