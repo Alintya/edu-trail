@@ -11,7 +11,7 @@ on:
 
 env:
   DOCKERFILE_PATH: 'src/EduTrail.WebUI/Dockerfile'
-  IMAGE_NAME: '${{ github.repository.name }}'
+  IMAGE_NAME: '${{ github.event.repository.name }}'
 
   PROJECT_ID: '${{ vars.GCR_PROJECT_ID }}'
   REGISTRY: '${{ vars.GCAR_REPO_LOCATION }}-docker.pkg.dev' # 'europe-west1-docker.pkg.dev'
