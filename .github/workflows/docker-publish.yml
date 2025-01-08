@@ -13,11 +13,10 @@ env:
   DOCKERFILE_PATH: "src/EduTrail.WebUI/Dockerfile"
   IMAGE_NAME: "${{ github.repository }}"
 
-  PROJECT_ID: "${{ env.GCR_PROJECT_ID }}"
-  AR_REPO_LOCATION: "${{ env.GCR_PROJECT_ID }}"
-  REGISTRY: "${{ env.GCAR_REPO_LOCATION }}-docker.pkg.dev"
-  AR_URL: "${{ env.GCAR_REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.GCR_SERVICE_NAME }}"
-  SERVICE_ACCOUNT: "${{ vars.GCWIF_SERVICE_ACCOUNT }}" # 'github-actions-service-account@my-project-id.iam.gserviceaccount.com'
+  PROJECT_ID: "${{ vars.GCR_PROJECT_ID }}"
+  REGISTRY: "${{ vars.GCAR_REPO_LOCATION }}-docker.pkg.dev" # 'europe-west1-docker.pkg.dev'
+  AR_URL: "${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ vars.GCR_SERVICE_NAME }}"
+  SERVICE_ACCOUNT: "${{ secrets.GCWIF_SERVICE_ACCOUNT }}" # 'github-actions-service-account@my-project-id.iam.gserviceaccount.com'
   WORKLOAD_IDENTITY_PROVIDER: "${{ secrets.GCWIF_PROVIDER }}" # 'projects/123456789/locations/global/workloadIdentityPools/my-app-dev-pool/providers/github-actions-provider'
 
 jobs:
