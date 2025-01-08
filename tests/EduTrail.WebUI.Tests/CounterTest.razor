@@ -11,6 +11,7 @@
         cut.Find("button").Click();
 
         // Assert: first find the <p> element, then verify its content
-        cut.Find("p").TextContent.Equals("Current count: 1");
+        var pElem = cut.Find("p");
+        Assert.Equal("Current count: 1", pElem.TextContent);
     }
 }
