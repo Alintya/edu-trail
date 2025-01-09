@@ -21,7 +21,7 @@ env:
 
 jobs:
   build-test:
-    uses: .github/workflows/test.yml
+    uses: '.github/workflows/test.yml@${{ github.sha }}'
 
   push-to-ar:
     needs: ['build-test']
