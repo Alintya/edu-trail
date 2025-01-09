@@ -21,6 +21,8 @@ env:
 
 jobs:
   push_to_ar:
+    needs: [test]
+
     permissions:
       contents: 'read'
       id-token: 'write'
