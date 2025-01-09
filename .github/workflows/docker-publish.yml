@@ -1,13 +1,13 @@
 name: Push to Artifact Registry
 
 on:
+  workflow_dispatch:
   push:
     branches: ["main", "develop"]
     # Publish semver tags as releases.
     tags: ["v*.*.*"]
   pull_request:
     branches: ["main", "develop"]
-  workflow_dispatch:
 
 env:
   DOCKERFILE_PATH: 'src/EduTrail.WebUI/Dockerfile'
@@ -20,9 +20,11 @@ env:
   WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.GCWIF_PROVIDER }}' # 'projects/123456789/locations/global/workloadIdentityPools/my-app-dev-pool/providers/github-actions-provider'
 
 jobs:
-  push_to_ar:
-    needs: [test]
+  build-test:
+    uses: .github/workflows/test.yml
 
+  push-to-ar:
+    needs: ['build-test']
     permissions:
       contents: 'read'
       id-token: 'write'
