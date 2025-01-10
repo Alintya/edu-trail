@@ -14,10 +14,10 @@ env:
   IMAGE_NAME: '${{ github.event.repository.name }}'
 
   PROJECT_ID: '${{ vars.GCR_PROJECT_ID }}'
-  REGISTRY: '${{ vars.GCAR_REPO_LOCATION }}-docker.pkg.dev' # 'europe-west1-docker.pkg.dev'
+  REGISTRY: '${{ vars.GCAR_REPO_LOCATION }}-docker.pkg.dev' # e.g. - 'europe-west1-docker.pkg.dev'
   AR_URL: '${{ vars.GCAR_REPO_LOCATION }}-docker.pkg.dev/${{ vars.GCR_PROJECT_ID }}/${{ vars.GCR_SERVICE_NAME }}'
-  SERVICE_ACCOUNT: '${{ secrets.GCWIF_SERVICE_ACCOUNT }}' # 'github-actions-service-account@my-project-id.iam.gserviceaccount.com'
-  WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.GCWIF_PROVIDER }}' # 'projects/123456789/locations/global/workloadIdentityPools/my-app-dev-pool/providers/github-actions-provider'
+  SERVICE_ACCOUNT: '${{ secrets.GCWIF_SERVICE_ACCOUNT }}' # e.g. - 'github-actions-service-account@my-project-id.iam.gserviceaccount.com'
+  WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.GCWIF_PROVIDER }}' # e.g. - 'projects/123456789/locations/global/workloadIdentityPools/my-app-dev-pool/providers/github-actions-provider'
 
 jobs:
   build-test:
