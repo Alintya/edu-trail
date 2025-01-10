@@ -4,10 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches: ["main", "develop"]
+    paths: ["src/**", "tests/**"]
     # Publish semver tags as releases.
     tags: ["v*.*.*"]
   pull_request:
     branches: ["main", "develop"]
+    paths: ["src/**", "tests/**"]
 
 env:
   DOCKERFILE_PATH: 'src/EduTrail.WebUI/Dockerfile'

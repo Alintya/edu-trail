@@ -49,9 +49,10 @@ name: Deploy to Cloud Run dev
 
 on:
   workflow_dispatch:
-#  push:
-#    branches:
-#      - develop
+  push:
+    branches:
+      - develop
+    paths: ["src/**", "tests/**"]
 
 env:
   PROJECT_ID: "${{ vars.GCR_PROJECT_ID }}"
