@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables("EDUTRAIL_");
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
@@ -57,5 +59,11 @@ app.MapRazorComponents<App>()
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+
+app.Lifetime.ApplicationStopping.Register(async () =>
+{
+    // Perform cleanup here, e.g., flush logs, close connections, etc.
+    //app.Logger.LogInformation("Application is stopping...");
+});
 
 app.Run();
