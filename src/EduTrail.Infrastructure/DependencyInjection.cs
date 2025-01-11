@@ -16,7 +16,8 @@ public static class ServiceCollectionExtensions
         // Register DbContext
         var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         services.AddDbContextFactory<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString));
+            options.UseNpgsql(connectionString));
+            //options.UseSqlServer(connectionString));
 
         // Register Identity
         services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
