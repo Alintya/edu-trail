@@ -6,6 +6,8 @@ services:
       dockerfile: src/EduTrail.WebUI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Release
+    depends_on: 
+      - edutrail.db
 
   edutrail.db:
     image: postgres:16

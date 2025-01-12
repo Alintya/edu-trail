@@ -25,8 +25,8 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore EduTrail.sln
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build EduTrail.sln --configuration Release --no-restore
       - name: Run tests
-        run: dotnet test --configuration Release --no-build --verbosity normal
+        run: dotnet test EduTrail.sln --configuration Release --no-build --verbosity normal
