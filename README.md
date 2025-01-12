@@ -33,44 +33,45 @@ EduTrail is a Blazor web application designed to create and manage configurable 
 ### Prerequisites
 
 - .NET 9.0 or later
-- Preferably PostgresSQL Server or any compatible database
 - Visual Studio 2022 or any IDE with .NET support
+- Local PostgresSQL Server or Docker (compose)
 
 ### Installation
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/edutrail.git
+   git clone https://github.com/yourusername/edu-trail.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd edutrail
+   cd edu-trail
    ```
 
-3. Configure the database connection in `appsettings.json`:
+3. Setup database
+either locally or using `docker compose up edutrail.db -d`
+
+4. Configure the database connection in `appsettings.json` where necessary:
 
    ```json
    "ConnectionStrings": {
-     "DefaultConnection": "Server=YOUR_SERVER;Database=EduTrailDB;Trusted_Connection=True;"
+     "DefaultConnection": "Server=localhost;Port=5432;Database=edutrail;User Id=myUsername;Password=myPassword;"
    }
    ```
 
-4. Apply migrations to set up the database:
+5. Apply migrations to set up the database:
 
    ```bash
-   dotnet ef database update
+   dotnet ef database update -p src/EduTrail.Infrastructure -s src/EduTrail.WebUI
    ```
 
-5. Run the application:
+6. Run the application:
 
    ```bash
    dotnet run
    ```
-
-6. Open a browser and navigate to `http://localhost:5000`.
 
 ---
 
