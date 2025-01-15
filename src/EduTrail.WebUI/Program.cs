@@ -1,9 +1,11 @@
 using EduTrail.Application;
 using EduTrail.Infrastructure;
+using EduTrail.Infrastructure.Data;
 using EduTrail.WebUI.Components;
 using EduTrail.WebUI.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 // The initial "bootstrap" logger is able to log errors during start-up. It's completely replaced by the
@@ -62,6 +64,10 @@ try
         app.UseExceptionHandler("/Error", createScopeForErrors: true);
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
+
+        using var scope = app.Services.CreateScope();
+        using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.Migrate();
     }
 
     app.UseHttpsRedirection();
