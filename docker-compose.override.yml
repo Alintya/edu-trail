@@ -19,3 +19,15 @@ services:
       - edutrail.db
     ports:
       - 8070:8080
+
+  edutrail.dev.seq:
+    image: datalust/seq:latest
+    container_name: seq
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "8071:80"
+#      - "5341:5341"
+    volumes:
+      - ./.containers/edutrail-seq-logs:/data
