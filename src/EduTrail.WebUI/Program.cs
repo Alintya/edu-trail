@@ -66,7 +66,8 @@ try
 
     app.UseHttpsRedirection();
 
-    app.UseStaticFiles();
+    //app.UseStaticFiles();
+    app.MapStaticAssets();
     app.UseSerilogRequestLogging();
     app.UseAntiforgery();
 
