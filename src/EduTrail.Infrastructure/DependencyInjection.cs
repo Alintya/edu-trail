@@ -32,6 +32,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IModuleContentRepository, ModuleContentRepository>();
         services.AddScoped<ITeacherRepository, TeacherRepository>();
         services.AddScoped<ITrailModuleRepository, TrailModuleRepository>();
+        services.AddScoped<IAssignmentSubmissionRepository, AssignmentSubmissionRepository>();
+        services.AddScoped<IClassRepository, ClassRepository>();
+        services.AddScoped<IClassStudentRepository, ClassStudentRepository>();
+        services.AddScoped<IClassTrailRepository, ClassTrailRepository>();
+        services.AddScoped<IStudentProgressRepository, StudentProgressRepository>();
+        services.AddScoped<IStudentRepository, StudentRepository>();
 
         // Infra
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
