@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches: ["main", "develop"]
+    paths: ["src/**", "tests/**"]
 
 jobs:
   build-test:

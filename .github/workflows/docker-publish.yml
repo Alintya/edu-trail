@@ -1,15 +1,13 @@
 name: Push to Artifact Registry
 
 on:
+  workflow_call:
   workflow_dispatch:
-  push:
-    branches: ["main", "develop"]
-    paths: ["src/**", "tests/**"]
-    # Publish semver tags as releases.
-    tags: ["v*.*.*"]
-  pull_request:
-    branches: ["main", "develop"]
-    paths: ["src/**", "tests/**"]
+  # push:
+  #   branches: ["main", "develop"]
+  #   paths: ["src/**", "tests/**"]
+  #   # Publish semver tags as releases.
+  #   tags: ["v*.*.*"]
 
 env:
   DOCKERFILE_PATH: 'src/EduTrail.WebUI/Dockerfile'

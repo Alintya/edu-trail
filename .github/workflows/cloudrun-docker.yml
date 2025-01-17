@@ -62,6 +62,9 @@ env:
   REGION: ${{ vars.GCAR_REPO_LOCATION }}
 
 jobs:
+  push-image:
+    uses: "./.github/workflows/docker-publish.yml"
+
   # migrate:
   #   runs-on: ubuntu-latest
   #   steps:
@@ -88,7 +91,7 @@ jobs:
   #         ConnectionStrings__DefaultConnection: "Host=127.0.0.1;Port=5432;Database=edutrail;Username=${{ secrets.DB_USERNAME }};Password=${{ secrets.DB_PASSWORD }}"
 
   deploy:
-    # needs: migrate
+    needs: push-image
     permissions:
       contents: "read"
       id-token: "write"
