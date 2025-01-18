@@ -66,6 +66,9 @@ jobs:
       contents: 'read'
       id-token: 'write'
     uses: "./.github/workflows/docker-publish.yml"
+    secrets:
+      GCWIF_SERVICE_ACCOUNT: ${{ secrets.GCWIF_SERVICE_ACCOUNT }}
+      GCWIF_PROVIDER: ${{ secrets.GCWIF_PROVIDER }}
 
   # migrate:
   #   runs-on: ubuntu-latest
