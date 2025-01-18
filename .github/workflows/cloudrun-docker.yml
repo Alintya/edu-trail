@@ -51,7 +51,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["fix/caller-workflow", "develop"]
-    paths: ["src/**", "tests/**"]
+#    paths: ["src/**", "tests/**"]
 
 env:
   PROJECT_ID: "${{ vars.GCR_PROJECT_ID }}"
