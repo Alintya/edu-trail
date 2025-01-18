@@ -23,6 +23,8 @@ try
 
     builder.Configuration.AddEnvironmentVariables("EDUTRAIL_");
 
+    builder.Services.Configure<DatabaseSeeder.DefaultAdminUserConfig>(builder.Configuration.GetSection("DefaultAdminUser"));
+
     builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
         .ReadFrom.Configuration(hostingContext.Configuration)
         .Enrich.FromLogContext()
@@ -69,6 +71,18 @@ try
     using var scope = app.Services.CreateScope();
     using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     dbContext.Database.Migrate();
+
+    try
+    {
+        Log.Information("Seeding database...");
+
+        var seeder = new DatabaseSeeder(app.Services, builder.Configuration);
+        await seeder.SeedAsync();
+    }
+    catch (Exception ex)
+    {
+        Log.Fatal($"Error seeding database: {ex.Message}");
+    }
 
     app.UseHttpsRedirection();
 
