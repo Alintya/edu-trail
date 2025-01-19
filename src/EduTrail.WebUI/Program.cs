@@ -35,7 +35,7 @@ try
         .AddInteractiveServerComponents()
         .AddInteractiveWebAssemblyComponents();
 
-    builder.Services.AddApplicationServices();
+    builder.Services.AddApplicationLayer();
     builder.Services.AddInfrastructureLayer(builder.Configuration);
 
     // Configure Authentication

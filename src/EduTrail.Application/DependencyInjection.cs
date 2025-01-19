@@ -4,7 +4,7 @@ namespace EduTrail.Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
             // Register application services
             //services.AddScoped<IProductService, ProductService>();
