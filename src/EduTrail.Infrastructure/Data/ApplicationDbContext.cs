@@ -1,6 +1,5 @@
 using EduTrail.Domain.Entities;
 using EduTrail.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -20,6 +19,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<ClassStudent> ClassStudents => Set<ClassStudent>();
     public DbSet<ClassTrail> ClassTrails => Set<ClassTrail>();
     public DbSet<StudentProgress> StudentProgress => Set<StudentProgress>();
+    //public DbSet<FileUpload> FileUploads => Set<FileUpload>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -37,6 +37,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         builder.ApplyConfiguration(new ClassStudentConfiguration());
         builder.ApplyConfiguration(new ClassTrailConfiguration());
         builder.ApplyConfiguration(new StudentProgressConfiguration());
+        //builder.ApplyConfiguration(new FileUploadConfiguration());
     }
 }
 
@@ -116,11 +117,6 @@ public class TrailModuleConfiguration : IEntityTypeConfiguration<TrailModule>
 
         builder.Property(tm => tm.Description)
             .HasMaxLength(1000);
-
-        builder.HasMany(tm => tm.Contents)
-            .WithOne(c => c.TrailModule)
-            .HasForeignKey(c => c.TrailModuleId)
-            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(tm => tm.Assignments)
             .WithOne(a => a.TrailModule)
@@ -211,6 +207,17 @@ public class AssignmentConfiguration : IEntityTypeConfiguration<Assignment>
 
         builder.Property(a => a.Description)
             .HasMaxLength(1000);
+
+        builder.HasMany(tm => tm.ModuleContents)
+            .WithOne(c => c.Assignment)
+            .HasForeignKey(c => c.AssignmentId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Property(a => a.Tags)
+            .HasConversion(
+                tags => string.Join(',', tags), // Convert List<string> to string
+                tags => tags.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList() // Convert string back to List<string>
+        );
     }
 }
 
@@ -240,5 +247,41 @@ public class StudentProgressConfiguration : IEntityTypeConfiguration<StudentProg
             .WithMany(s => s.Progress)
             .HasForeignKey(sp => sp.StudentId)
             .OnDelete(DeleteBehavior.Cascade);
+    }
+}
+
+public class FileUploadConfiguration : IEntityTypeConfiguration<FileUpload>
+{
+    public void Configure(EntityTypeBuilder<FileUpload> builder)
+    {
+        builder.ToTable("FileUploads");
+
+        builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.FileName)
+            .IsRequired()
+            .HasMaxLength(255);
+
+        builder.Property(x => x.ContentType)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        builder.Property(x => x.Size)
+            .IsRequired();
+
+        builder.Property(x => x.Path)
+            .IsRequired()
+            .HasMaxLength(1000);
+
+        builder.Property(x => x.UploadedBy)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        builder.Property(x => x.UploadedAt)
+            .IsRequired();
+
+        // Indexes
+        builder.HasIndex(x => x.UploadedAt);
+        builder.HasIndex(x => x.UploadedBy);
     }
 }

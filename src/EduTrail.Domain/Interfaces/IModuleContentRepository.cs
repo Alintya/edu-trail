@@ -4,5 +4,5 @@ namespace EduTrail.Domain.Interfaces;
 
 public interface IModuleContentRepository : IRepository<ModuleContent>
 {
-    Task<IEnumerable<ModuleContent>> GetContentsByModuleAsync(Guid moduleId);
+    Task<IEnumerable<ModuleContent>> GetContentsByAssignmentAsync(Guid moduleId);
 }

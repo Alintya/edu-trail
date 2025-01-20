@@ -9,11 +9,11 @@ public class ModuleContentRepository(IDbContextFactory<ApplicationDbContext> con
 {
     private readonly IDbContextFactory<ApplicationDbContext> contextFactory = contextFactory;
 
-    public async Task<IEnumerable<ModuleContent>> GetContentsByModuleAsync(Guid moduleId)
+    public async Task<IEnumerable<ModuleContent>> GetContentsByAssignmentAsync(Guid assignmentId)
     {
         await using var context = await contextFactory.CreateDbContextAsync();
         return await context.ModuleContents
-            .Where(mc => mc.TrailModuleId == moduleId)
+            .Where(mc => mc.AssignmentId == assignmentId)
             .OrderBy(mc => mc.OrderIndex)
             .ToListAsync();
     }

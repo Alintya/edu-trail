@@ -9,14 +9,6 @@ public class TrailModuleRepository(IDbContextFactory<ApplicationDbContext> conte
 {
     private readonly IDbContextFactory<ApplicationDbContext> contextFactory = contextFactory;
 
-    public async Task<TrailModule?> GetModuleWithContentsAsync(Guid id)
-    {
-        await using var context = await contextFactory.CreateDbContextAsync();
-        return await context.TrailModules
-            .Include(tm => tm.Contents)
-            .FirstOrDefaultAsync(tm => tm.Id == id);
-    }
-
     public async Task<TrailModule?> GetModuleWithAssignmentsAsync(Guid id)
     {
         await using var context = await contextFactory.CreateDbContextAsync();

@@ -13,6 +13,5 @@ public class TrailModule
 
     // Navigation properties
     public LearningTrail LearningTrail { get; set; } = null!;
-    public ICollection<ModuleContent> Contents { get; set; } = [];
     public ICollection<Assignment> Assignments { get; set; } = [];
 }

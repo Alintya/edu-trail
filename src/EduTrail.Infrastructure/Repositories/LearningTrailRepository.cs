@@ -14,8 +14,6 @@ public class LearningTrailRepository(IDbContextFactory<ApplicationDbContext> con
         await using var context = await contextFactory.CreateDbContextAsync();
         return await context.LearningTrails
             .Include(lt => lt.Modules)
-                .ThenInclude(m => m.Contents)
-            .Include(lt => lt.Modules)
                 .ThenInclude(m => m.Assignments)
             .FirstOrDefaultAsync(lt => lt.Id == id);
     }

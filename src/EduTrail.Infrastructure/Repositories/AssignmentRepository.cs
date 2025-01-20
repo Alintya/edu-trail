@@ -9,6 +9,14 @@ public class AssignmentRepository(IDbContextFactory<ApplicationDbContext> contex
 {
     private readonly IDbContextFactory<ApplicationDbContext> contextFactory = contextFactory;
 
+    public async Task<Assignment?> GetAssignmentWithContentsAsync(Guid id)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+        return await context.Assignments
+            .Include(a => a.ModuleContents)
+            .FirstOrDefaultAsync(a => a.Id == id);
+    }
+
     public async Task<Assignment?> GetAssignmentWithSubmissionsAsync(Guid id)
     {
         await using var context = await contextFactory.CreateDbContextAsync();
@@ -33,6 +41,14 @@ public class AssignmentRepository(IDbContextFactory<ApplicationDbContext> contex
         return await context.Assignments
             .Where(a => !a.Submissions.Any(s => s.StudentId == studentId))
             .OrderBy(a => a.DueDate)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Assignment>> GetAssignmentsByTagAsync(string tag)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+        return await context.Assignments
+            .Where(a => a.Tags.Contains(tag))
             .ToListAsync();
     }
 }
