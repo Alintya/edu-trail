@@ -1,4 +1,6 @@
-﻿using EduTrail.Domain.Interfaces;
+﻿using EduTrail.Application.Configuration;
+using EduTrail.Application.Interfaces;
+using EduTrail.Domain.Interfaces;
 using EduTrail.Infrastructure.Data;
 using EduTrail.Infrastructure.Identity;
 using EduTrail.Infrastructure.Repositories;
@@ -36,6 +38,8 @@ public static class ServiceCollectionExtensions
             options.Password.RequiredLength = 6;
             options.Password.RequiredUniqueChars = 1;
         });
+
+        services.Configure<FileStorageOptions>(configuration.GetSection("FileStorage"));
 
         // Register repositories
         services.AddScoped<IAssignmentRepository, AssignmentRepository>();
