@@ -19,7 +19,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<ClassStudent> ClassStudents => Set<ClassStudent>();
     public DbSet<ClassTrail> ClassTrails => Set<ClassTrail>();
     public DbSet<StudentProgress> StudentProgress => Set<StudentProgress>();
-    //public DbSet<FileUpload> FileUploads => Set<FileUpload>();
+    public DbSet<FileUpload> FileUploads => Set<FileUpload>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -37,7 +37,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         builder.ApplyConfiguration(new ClassStudentConfiguration());
         builder.ApplyConfiguration(new ClassTrailConfiguration());
         builder.ApplyConfiguration(new StudentProgressConfiguration());
-        //builder.ApplyConfiguration(new FileUploadConfiguration());
+        builder.ApplyConfiguration(new FileUploadConfiguration());
     }
 }
 
