@@ -7,7 +7,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Release
     depends_on: 
-      - edutrail.db
+      edutrail.db:
+        condition: service_healthy
 
   edutrail.db:
     image: postgres:16
@@ -19,3 +20,8 @@ services:
       - ./.containers/edutrail-db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
