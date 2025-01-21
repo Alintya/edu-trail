@@ -28,7 +28,7 @@ try
     builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
         .ReadFrom.Configuration(hostingContext.Configuration)
         .Enrich.FromLogContext()
-        .WriteTo.Console());
+        .WriteTo.Async(x => x.Console()));
 
     // Add services to the container.
     builder.Services.AddRazorComponents()
