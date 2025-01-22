@@ -258,7 +258,7 @@ public class FileUploadConfiguration : IEntityTypeConfiguration<FileUpload>
 
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.FileName)
+        builder.Property(x => x.StorageIdentifier)
             .IsRequired()
             .HasMaxLength(255);
 
@@ -268,10 +268,6 @@ public class FileUploadConfiguration : IEntityTypeConfiguration<FileUpload>
 
         builder.Property(x => x.Size)
             .IsRequired();
-
-        builder.Property(x => x.Path)
-            .IsRequired()
-            .HasMaxLength(1000);
 
         builder.Property(x => x.UploadedBy)
             .IsRequired()

@@ -3,22 +3,21 @@
 public class FileUpload
 {
     public Guid Id { get; private set; }
-    public string FileName { get; private set; }
+    public string StorageIdentifier { get; private set; }
     public string ContentType { get; private set; }
     public long Size { get; private set; }
-    public string Path { get; private set; }
     public DateTime UploadedAt { get; private set; }
     public string UploadedBy { get; set; } = string.Empty;
+    public string DisplayName { get; set; } = string.Empty;
 
     private FileUpload() { } // For EF Core
 
-    public FileUpload(string fileName, string contentType, long size, string path)
+    public FileUpload(string storageId, string contentType, long size)
     {
-        Id = Guid.NewGuid();
-        FileName = fileName;
+        //Id = Guid.NewGuid();
+        StorageIdentifier = storageId;
         ContentType = contentType;
         Size = size;
-        Path = path;
         UploadedAt = DateTime.UtcNow;
     }
 }
