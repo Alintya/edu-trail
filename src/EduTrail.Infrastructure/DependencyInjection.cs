@@ -53,6 +53,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IClassTrailRepository, ClassTrailRepository>();
         services.AddScoped<IStudentProgressRepository, StudentProgressRepository>();
         services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<IFileUploadRepository, FileUploadRepository>();
 
         // Infra
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
