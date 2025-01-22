@@ -4,6 +4,7 @@ using EduTrail.Domain.Interfaces;
 using EduTrail.Infrastructure.Data;
 using EduTrail.Infrastructure.Identity;
 using EduTrail.Infrastructure.Repositories;
+using EduTrail.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -57,6 +58,7 @@ public static class ServiceCollectionExtensions
 
         // Infra
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+        services.AddScoped<IFileStorageServiceFactory, FileStorageServiceFactory>();
 
         return services;
     }

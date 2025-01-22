@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EduTrail.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EduTrail.Application
 {
@@ -8,6 +9,7 @@ namespace EduTrail.Application
         {
             // Register application services
             //services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<FileUploadService>();
 
             return services;
         }

@@ -14,9 +14,4 @@
     <ProjectReference Include="..\EduTrail.Domain\EduTrail.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
