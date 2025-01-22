@@ -22,8 +22,11 @@ public class FileUploadService
     {
         var storageIdentifier = await fileStorageService.UploadFileAsync(fileStream, fileName, contentType);
 
-        var fileUpload = new FileUpload(storageIdentifier, contentType, size)
+        var fileUpload = new FileUpload
         {
+            StorageIdentifier = storageIdentifier,
+            ContentType = contentType,
+            Size = size,
             DisplayName = fileName
         };
 
