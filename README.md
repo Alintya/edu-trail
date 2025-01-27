@@ -123,13 +123,13 @@ EduTrail is a Blazor web application designed to create and manage configurable 
       }
       ```
 
-5. (Optional) Apply migrations manually:
+   c. (Optional) Apply migrations manually:
 
-   ```bash
-   dotnet ef database update -p src/EduTrail.Infrastructure -s src/EduTrail.WebUI
-   ```
+      ```bash
+      dotnet ef database update -p src/EduTrail.Infrastructure -s src/EduTrail.WebUI
+      ```
 
-6. Run the application (or `dotnet watch` to hot-reload):
+4. Run the application (or `dotnet watch` to hot-reload):
 
    ```bash
    dotnet run --project src/EduTrail.WebUI
