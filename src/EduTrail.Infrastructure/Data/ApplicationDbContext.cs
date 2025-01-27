@@ -2,6 +2,7 @@ using EduTrail.Domain.Entities;
 using EduTrail.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EduTrail.Infrastructure.Data;
@@ -216,7 +217,11 @@ public class AssignmentConfiguration : IEntityTypeConfiguration<Assignment>
         builder.Property(a => a.Tags)
             .HasConversion(
                 tags => string.Join(',', tags), // Convert List<string> to string
-                tags => tags.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList() // Convert string back to List<string>
+                tags => tags.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList(), // Convert string back to List<string>
+                new ValueComparer<List<string>>(
+                    (v1, v2) => v1!.SequenceEqual(v2!),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => c.ToList())
         );
     }
 }
@@ -243,9 +248,16 @@ public class StudentProgressConfiguration : IEntityTypeConfiguration<StudentProg
 {
     public void Configure(EntityTypeBuilder<StudentProgress> builder)
     {
+        builder.HasKey(sp => new { sp.StudentId, sp.AssignmentId });
+
         builder.HasOne(sp => sp.Student)
             .WithMany(s => s.Progress)
             .HasForeignKey(sp => sp.StudentId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(sp => sp.Assignment)
+            .WithMany(a => a.Progress)
+            .HasForeignKey(sp => sp.AssignmentId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

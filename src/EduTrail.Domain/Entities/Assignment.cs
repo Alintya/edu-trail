@@ -15,4 +15,5 @@ public class Assignment
     public TrailModule TrailModule { get; set; } = null!;
     public ICollection<ModuleContent> ModuleContents { get; set; } = [];
     public ICollection<AssignmentSubmission> Submissions { get; set; } = [];
+    public ICollection<StudentProgress> Progress { get; set; } = [];
 }
