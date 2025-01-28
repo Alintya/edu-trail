@@ -1,0 +1,9 @@
+{
+    "files.defaultLanguage": "${activeEditorLanguage}",
+    "files.exclude": {
+        ".containers": true,
+        "**/bin": true,
+        "**/obj": true
+    },
+    "files.insertFinalNewline": true
+}
