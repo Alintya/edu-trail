@@ -13,7 +13,7 @@ public class Assignment
 
     // Navigation properties
     public TrailModule TrailModule { get; set; } = null!;
-    public ICollection<ModuleContent> ModuleContents { get; set; } = [];
+    public ICollection<AssignmentContent> Contents { get; set; } = [];
     public ICollection<AssignmentSubmission> Submissions { get; set; } = [];
     public ICollection<StudentProgress> Progress { get; set; } = [];
 }

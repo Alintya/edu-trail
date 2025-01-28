@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EduTrail.Infrastructure.Repositories;
 
-public class ModuleContentRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : Repository<ModuleContent>(contextFactory), IModuleContentRepository
+public class ModuleContentRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : Repository<AssignmentContent>(contextFactory), IModuleContentRepository
 {
     private readonly IDbContextFactory<ApplicationDbContext> contextFactory = contextFactory;
 
-    public async Task<IEnumerable<ModuleContent>> GetContentsByAssignmentAsync(Guid assignmentId)
+    public async Task<IEnumerable<AssignmentContent>> GetContentsByAssignmentAsync(Guid assignmentId)
     {
         await using var context = await contextFactory.CreateDbContextAsync();
-        return await context.ModuleContents
+        return await context.AssignmentContents
             .Where(mc => mc.AssignmentId == assignmentId)
             .OrderBy(mc => mc.OrderIndex)
             .ToListAsync();

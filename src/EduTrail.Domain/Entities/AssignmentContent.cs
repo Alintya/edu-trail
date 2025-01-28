@@ -3,7 +3,7 @@
 /// <summary>
 /// documents, videos, links
 /// </summary>
-public class ModuleContent
+public class AssignmentContent
 {
     public Guid Id { get; set; }
     public Guid AssignmentId { get; set; }

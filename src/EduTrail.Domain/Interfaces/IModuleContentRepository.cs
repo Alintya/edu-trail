@@ -2,7 +2,7 @@
 
 namespace EduTrail.Domain.Interfaces;
 
-public interface IModuleContentRepository : IRepository<ModuleContent>
+public interface IModuleContentRepository : IRepository<AssignmentContent>
 {
-    Task<IEnumerable<ModuleContent>> GetContentsByAssignmentAsync(Guid moduleId);
+    Task<IEnumerable<AssignmentContent>> GetContentsByAssignmentAsync(Guid moduleId);
 }

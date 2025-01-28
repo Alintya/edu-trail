@@ -13,7 +13,7 @@ public class AssignmentRepository(IDbContextFactory<ApplicationDbContext> contex
     {
         await using var context = await contextFactory.CreateDbContextAsync();
         return await context.Assignments
-            .Include(a => a.ModuleContents)
+            .Include(a => a.Contents)
             .FirstOrDefaultAsync(a => a.Id == id);
     }
 

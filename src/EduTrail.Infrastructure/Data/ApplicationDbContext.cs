@@ -13,7 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Teacher> Teachers => Set<Teacher>();
     public DbSet<LearningTrail> LearningTrails => Set<LearningTrail>();
     public DbSet<TrailModule> TrailModules => Set<TrailModule>();
-    public DbSet<ModuleContent> ModuleContents => Set<ModuleContent>();
+    public DbSet<AssignmentContent> AssignmentContents => Set<AssignmentContent>();
     public DbSet<Assignment> Assignments => Set<Assignment>();
     public DbSet<AssignmentSubmission> AssignmentSubmissions => Set<AssignmentSubmission>();
     public DbSet<Class> Classes => Set<Class>();
@@ -31,7 +31,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         builder.ApplyConfiguration(new TeacherConfiguration());
         builder.ApplyConfiguration(new LearningTrailConfiguration());
         builder.ApplyConfiguration(new TrailModuleConfiguration());
-        builder.ApplyConfiguration(new ModuleContentConfiguration());
+        builder.ApplyConfiguration(new AssignmentContentConfiguration());
         builder.ApplyConfiguration(new AssignmentConfiguration());
         builder.ApplyConfiguration(new AssignmentSubmissionConfiguration());
         builder.ApplyConfiguration(new ClassConfiguration());
@@ -126,9 +126,9 @@ public class TrailModuleConfiguration : IEntityTypeConfiguration<TrailModule>
     }
 }
 
-public class ModuleContentConfiguration : IEntityTypeConfiguration<ModuleContent>
+public class AssignmentContentConfiguration : IEntityTypeConfiguration<AssignmentContent>
 {
-    public void Configure(EntityTypeBuilder<ModuleContent> builder)
+    public void Configure(EntityTypeBuilder<AssignmentContent> builder)
     {
         builder.Property(mc => mc.Title)
             .HasMaxLength(200)
@@ -209,7 +209,7 @@ public class AssignmentConfiguration : IEntityTypeConfiguration<Assignment>
         builder.Property(a => a.Description)
             .HasMaxLength(1000);
 
-        builder.HasMany(tm => tm.ModuleContents)
+        builder.HasMany(tm => tm.Contents)
             .WithOne(c => c.Assignment)
             .HasForeignKey(c => c.AssignmentId)
             .OnDelete(DeleteBehavior.Cascade);
