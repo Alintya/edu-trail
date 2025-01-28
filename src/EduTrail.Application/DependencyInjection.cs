@@ -9,7 +9,7 @@ namespace EduTrail.Application
         {
             // Register application services
             //services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<FileUploadService>();
+            services.AddScoped<FileAppService>();
 
             return services;
         }

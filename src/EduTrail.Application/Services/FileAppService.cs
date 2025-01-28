@@ -5,13 +5,13 @@ using Microsoft.Extensions.Logging;
 
 namespace EduTrail.Application.Services;
 
-public class FileUploadService
+public class FileAppService
 {
-    private readonly ILogger<FileUploadService> logger;
+    private readonly ILogger<FileAppService> logger;
     private readonly IFileUploadRepository fileUploadRepository;
     private readonly IFileStorageService fileStorageService;
 
-    public FileUploadService(ILogger<FileUploadService> logger, IFileUploadRepository fileUploadRepository, IFileStorageServiceFactory storageServiceFactory)
+    public FileAppService(ILogger<FileAppService> logger, IFileUploadRepository fileUploadRepository, IFileStorageServiceFactory storageServiceFactory)
     {
         this.logger = logger;
         this.fileUploadRepository = fileUploadRepository;
