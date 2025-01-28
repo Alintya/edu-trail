@@ -1,22 +1,18 @@
-﻿using EduTrail.Domain.Interfaces;
+﻿using EduTrail.Domain.Exceptions;
+using EduTrail.Domain.Interfaces;
 using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduTrail.Infrastructure.Repositories;
 
-public class Repository<T> : IRepository<T> where T : class
+public class Repository<T>(IDbContextFactory<ApplicationDbContext> contextFactory) : IRepository<T> where T : class
 {
-    private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
+    private readonly IDbContextFactory<ApplicationDbContext> contextFactory = contextFactory;
 
-    public Repository(IDbContextFactory<ApplicationDbContext> contextFactory)
-    {
-        this.contextFactory = contextFactory;
-    }
-
-    public virtual async Task<T?> GetByIdAsync(Guid id)
+    public virtual async Task<T> GetByIdAsync(Guid id)
     {
         await using var context = await contextFactory.CreateDbContextAsync();
-        return await context.Set<T>().FindAsync(id);
+        return await context.Set<T>().FindAsync(id) ?? throw new EntityNotFoundException();
     }
 
     public virtual async Task<IEnumerable<T>> GetAllAsync()

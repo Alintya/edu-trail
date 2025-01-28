@@ -1,4 +1,4 @@
-﻿namespace EduTrail.Domain;
+﻿namespace EduTrail.Domain.Exceptions;
 
 public class DomainValidationException : Exception
 {
@@ -14,3 +14,4 @@ public class DomainValidationException : Exception
     {
     }
 }
+
