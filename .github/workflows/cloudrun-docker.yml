@@ -50,7 +50,7 @@ name: Deploy to Cloud Run dev
 on:
   workflow_dispatch:
   push:
-    branches: ["develop", "feat/bucket"]
+    branches: ["develop"]
     paths: ["src/**", "tests/**"]
 
 env:
