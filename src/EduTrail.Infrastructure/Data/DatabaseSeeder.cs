@@ -113,13 +113,13 @@ public class DatabaseSeeder
                                 Description = "Read.",
                                 DueDate = DateTime.UtcNow.AddDays(14),
                                 NeedsSubmission = false,
-                                ModuleContents =
+                                Contents =
                                 [
-                                    new ModuleContent
+                                    new AssignmentContent
                                     {
                                         Title = "Variables",
                                         OrderIndex = 1,
-                                    }                    
+                                    }
                                 ],
                                 Tags =
                                 [
