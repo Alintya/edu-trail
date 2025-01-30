@@ -103,6 +103,9 @@ try
     {
         // Perform cleanup here, e.g., flush logs, close connections, etc.
         //app.Logger.LogInformation("Application is stopping...");
+
+        // TODO: remove, just for no-await-warning
+        await Task.CompletedTask;
     });
 
     app.Run();
