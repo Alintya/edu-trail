@@ -2,7 +2,56 @@
 
 @inject NavigationManager NavigationManager
 
-<div class="top-row ps-3 navbar navbar-dark">
+
+<nav>
+    <div class="top-row">
+        <Branding />
+        <div class="top-row-nav">
+            <!--Lehrer-->
+            <NavLink href="https://learn.microsoft.com/aspnet/core/" target="_blank">Meine Lernpfade</NavLink>
+            <NavLink href="https://learn.microsoft.com/aspnet/core/" target="_blank">Meine Lerngruppen</NavLink>
+
+            <!--Schüler-->
+            <NavLink href="https://learn.microsoft.com/aspnet/core/" target="_blank">Lernpfade</NavLink>
+
+            <!--Allgemein-->
+            <NavLink href="/impressum">Impressum</NavLink>
+            <NavLink href="https://learn.microsoft.com/aspnet/core/" target="_blank">Katalog</NavLink>
+
+            <AuthorizeView>
+                <Authorized>
+                    <NavLink class="" href="Account/Manage">
+                        @context.User.Identity?.Name
+                    </NavLink>
+                        <form action="Account/Logout" method="post">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                            <button type="submit" class="">
+                                Logout
+                            </button>
+                        </form>
+                </Authorized>
+                <NotAuthorized>
+@*                         <NavLink class="" href="Account/Register">
+                            Register
+                        </NavLink> *@
+                        <NavLink class="" href="Account/Login">
+                            Anmelden
+                        </NavLink>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+@* <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">EduTrail</a>
     </div>
@@ -73,7 +122,7 @@
             </NotAuthorized>
         </AuthorizeView>
     </nav>
-</div>
+</div> *@
 
 @code {
     private string? currentUrl;
