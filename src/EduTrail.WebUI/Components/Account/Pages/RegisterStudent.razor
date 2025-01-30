@@ -1,0 +1,115 @@
+﻿@page "/Account/Register/Student"
+
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using EduTrail.Infrastructure.Identity
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+
+@layout EduTrail.WebUI.Components.Layout.AccountLayout
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IUserStore<ApplicationUser> UserStore
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IEmailSender<ApplicationUser> EmailSender
+@inject ILogger<RegisterTeacher> Logger
+@inject NavigationManager NavigationManager
+@inject IdentityRedirectManager RedirectManager
+
+<PageTitle>Registrieren</PageTitle>
+
+<h1>Registrieren</h1>
+
+<div class="row">
+    <div class="col">
+        <StatusMessage Message="@Message" />
+        <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert" />
+            <div class="pin-container">
+                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 0)" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 1)" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 2)" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 3)" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 4)" placeholder="•">
+            </div>
+            <script>
+                function moveToNext(input, index) {
+                    const inputs = document.querySelectorAll(".pin-input");
+                    if (input.value.length === 1 && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            </script>
+            <div class="form-floating">
+                <label class="form-label" for="firstname">Vorname</label>
+                <InputText @bind-Value="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="Maximilian" />
+                <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+            </div>
+            <div class="form-floating">
+                <label class="form-label" for="secondname">Nachname</label>
+                <InputText @bind-Value="Input.SecondName" class="form-control" autocomplete="secondname" aria-required="true" placeholder="Mustermann" />
+                <ValidationMessage For="() => Input.SecondName" class="text-danger" />
+            </div>
+            <div class="form-floating">
+                <label class="form-label" for="password">Passwort</label>
+                <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Passwort" />
+                <ValidationMessage For="() => Input.Password" class="text-danger" />
+            </div>
+            <div class="form-floating">
+                <label class="form-label" for="confirm-password">Passwort wiederholen</label>
+                <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Passwort" />
+                <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+            </div>
+            <button type="submit" class="btn-primary">Registrieren</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<IdentityError>? identityErrors;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
+
+    public async Task RegisterUser(EditContext editContext)
+    {
+       
+    }
+
+
+    private sealed class InputModel
+    {
+        [Required]
+        [StringLength(5, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
+        [Display(Name = "PIN")]
+        public string PIN { get; set; } = "";
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "FirstName")]
+        public string FirstName { get; set; } = "";
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "SecondName")]
+        public string SecondName { get; set; } = "";
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; } = "";
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; } = "";
+    }
+}
