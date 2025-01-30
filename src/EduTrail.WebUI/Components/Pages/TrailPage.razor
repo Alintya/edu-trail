@@ -1,0 +1,32 @@
+﻿@using EduTrail.Application.Interfaces
+@using EduTrail.Domain.Entities
+@using EduTrail.WebUI.Components.Trail
+
+@page "/trail/{TrailId:guid}"
+
+@inject ITrailAppService TrailService
+
+@if (LearningTrail is not null)
+{
+    <Trail Edit="false" LearningTrail="@LearningTrail" />
+}
+else
+{
+    /*Todo: 404*/
+    <p>Fuuu</p>
+}
+
+@code {
+    [Parameter]
+    public Guid TrailId { get; set; }
+
+    private LearningTrail? LearningTrail { get; set; } = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (TrailId != Guid.Empty)
+        {
+            LearningTrail = await TrailService.GetTrailByIdAsync(TrailId);
+        }
+    }
+}

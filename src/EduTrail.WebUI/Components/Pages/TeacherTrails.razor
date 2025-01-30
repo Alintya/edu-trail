@@ -1,0 +1,10 @@
+﻿@page "/class/{classId:guid?}"
+
+@attribute [Authorize(Roles = "Admin, Teacher")]
+
+<h3>ClassDashboard</h3>
+
+@code {
+    [Parameter]
+    public Guid? ClassId { get; set; }
+}
