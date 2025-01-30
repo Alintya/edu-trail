@@ -1,0 +1,97 @@
+﻿@using EduTrail.Domain.Entities
+@using EduTrail.Domain.Interfaces
+@using EduTrail.Infrastructure.Identity
+@using Microsoft.AspNetCore.Identity
+
+@inject IStudentRepository StudentRepository
+@inject IClassRepository ClassRepository
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager NavigationManager
+
+<h3>Create Student</h3>
+
+<EditForm Model="@studentModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="studentName">Student Name</label>
+        <InputText id="studentName" class="form-control" @bind-Value="studentModel.Name" />
+        <ValidationMessage For="@(() => studentModel.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="studentEmail">Student Email</label>
+        <InputText id="studentEmail" class="form-control" @bind-Value="studentModel.Email" />
+        <ValidationMessage For="@(() => studentModel.Email)" />
+    </div>
+
+    <div class="form-group">
+        <label for="studentPassword">Student Password</label>
+        <InputText id="studentPassword" type="password" class="form-control" @bind-Value="studentModel.Password" />
+        <ValidationMessage For="@(() => studentModel.Password)" />
+    </div>
+
+    <div class="form-group">
+        <label for="class">Class</label>
+        <InputSelect id="class" class="form-control" @bind-Value="studentModel.ClassId">
+            <option value="">Select a class</option>
+            @foreach (var classItem in classes)
+            {
+                <option value="@classItem.Id">@classItem.Name</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => studentModel.ClassId)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Student</button>
+</EditForm>
+
+@code {
+    private StudentModel studentModel = new();
+    private List<Class> classes = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        classes = (await ClassRepository.GetAllAsync()).ToList();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var student = new Student
+            {
+                FirstName = studentModel.Name,
+            };
+
+        student.AssignToClass(studentModel.ClassId);
+
+        await StudentRepository.AddAsync(student);
+
+        var user = new ApplicationUser
+            {
+                UserName = studentModel.Email,
+                Email = studentModel.Email,
+                ProfileId = student.Id
+            };
+
+        var result = await UserManager.CreateAsync(user, studentModel.Password);
+        if (result.Succeeded)
+        {
+            await UserManager.AddToRoleAsync(user, "Student");
+        }
+        else
+        {
+            // Handle errors
+        }
+    }
+
+    private class StudentModel
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string StudentNumber { get; set; } = string.Empty;
+        public Guid ClassId { get; set; }
+    }
+}
+

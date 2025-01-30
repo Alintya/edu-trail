@@ -1,0 +1,59 @@
+﻿@using EduTrail.Domain.Entities
+@using EduTrail.Domain.Interfaces
+@using EduTrail.Infrastructure.Identity
+@using Microsoft.AspNetCore.Identity
+
+@inject IClassRepository ClassRepository
+@inject ITeacherRepository TeacherRepository
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create Class</PageTitle>
+
+<h3>Create Class</h3>
+
+<EditForm Model="@classModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="className">Class Name</label>
+        <InputText id="className" class="form-control" @bind-Value="classModel.Name" />
+        <ValidationMessage For="@(() => classModel.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="classDescription">Class Description</label>
+        <InputTextArea id="classDescription" class="form-control" @bind-Value="classModel.Description" />
+        <ValidationMessage For="@(() => classModel.Description)" />
+    </div>
+
+    <div class="form-group">
+        <label for="teacher">Teacher</label>
+        <InputSelect id="teacher" class="form-control" @bind-Value="classModel.TeacherId">
+            <option value="">Select a teacher</option>
+            @foreach (var teacher in teachers)
+            {
+                <option value="@teacher.Id">@teacher.FirstName @teacher.LastName</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => classModel.TeacherId)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Class</button>
+</EditForm>
+
+@code {
+    private Class classModel = new();
+    private List<Teacher> teachers = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        teachers = (await TeacherRepository.GetAllAsync()).ToList();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await ClassRepository.AddAsync(classModel);
+        NavigationManager.NavigateTo("/");
+    }
+}
