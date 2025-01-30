@@ -23,7 +23,7 @@ public class FileStorageServiceFactory : IFileStorageServiceFactory
         return options.Provider switch
         {
             FileStorageProvider.LocalStorage => ActivatorUtilities.CreateInstance<LocalFileStorageService>(serviceProvider),
-            //FileStorageProvider.GoogleCloudStorage => ActivatorUtilities.CreateInstance<GoogleCloudStorageService>(serviceProvider),
+            FileStorageProvider.GoogleCloudStorage => ActivatorUtilities.CreateInstance<GoogleCloudStorageService>(serviceProvider),
             _ => throw new ArgumentException($"Unsupported storage provider: {options.Provider}")
         };
     }
