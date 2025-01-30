@@ -16,6 +16,8 @@ public class FileAppService
         this.logger = logger;
         this.fileUploadRepository = fileUploadRepository;
         fileStorageService = storageServiceFactory.CreateStorageService();
+
+        logger.LogInformation("Using {FileStorageServiceType} for storage", fileStorageService.GetType().Name);
     }
 
     public async Task<FileUpload> UploadFileAsync(Stream fileStream, string fileName, string contentType, long size)
@@ -33,5 +35,11 @@ public class FileAppService
         await fileUploadRepository.AddAsync(fileUpload);
 
         return fileUpload;
+    }
+
+    public async Task<string> GetUri(FileUpload file)
+    {
+        // TODO: auth check
+        return await fileStorageService.GetPublicUrlAsync(file.StorageIdentifier);
     }
 }
