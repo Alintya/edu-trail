@@ -1,0 +1,54 @@
+﻿@page "/file-upload"
+@rendermode InteractiveServer
+@using EduTrail.Application.Services
+@using EduTrail.Domain.Entities
+@using EduTrail.Domain.Interfaces
+
+@inject FileAppService FileUploadService
+@inject IFileUploadRepository repo
+
+<InputFile OnChange="@HandleFileSelected" />
+
+<br />
+
+@foreach (var upload in AllUploads)
+{
+    <div>
+        <span>@upload.DisplayName</span>
+        <span>@upload.StorageIdentifier</span>
+        <span>@upload.ContentType</span>
+        <span>@upload.Size</span>
+        <span>@upload.UploadedAt.ToString()</span>
+    </div>
+})
+
+@code {
+    private readonly List<FileUpload> AllUploads = new List<FileUpload>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllUploads.AddRange(await repo.GetAllAsync());
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        await using var stream = file.OpenReadStream();
+
+        try
+        {
+            var result = await FileUploadService.UploadFileAsync(
+                stream,
+                file.Name,
+                file.ContentType,
+                file.Size
+            );
+
+            // Handle successful upload
+        }
+        catch (Exception ex)
+        {
+            // Handle error
+        }
+    }
+}
