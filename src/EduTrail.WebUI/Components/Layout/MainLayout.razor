@@ -1,16 +1,24 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        <div class="top-row">
+            <Branding />
+            <div class="top-row-nav">
+                <!--Lehrer-->
+                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">Meine Lernpfade</a>
+                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">Meine Lerngruppen</a>
+
+                <!--Schüler-->
+                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">Lernpfade</a>
+
+                <!--Allgemein-->
+                <a href="/impressum">Impressum</a>
+                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">Katalog</a>
+            </div>
         </div>
 
-        <article class="content px-4">
+        <article class="content">
             @Body
         </article>
     </main>
