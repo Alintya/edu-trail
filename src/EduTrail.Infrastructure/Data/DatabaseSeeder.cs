@@ -80,12 +80,56 @@ public class DatabaseSeeder
 
         if (!(await learningTrailRepository.GetAllAsync()).Any())
         {
-            await learningTrailRepository.AddAsync(new LearningTrail
+            var trail = await learningTrailRepository.AddAsync(new LearningTrail
             {
                 Title = "Introduction to Programming",
                 Description = "Learn the basics of programming.",
                 CreatedAt = DateTime.UtcNow,
-                IsPublished = true
+                IsPublished = true,
+                Modules =
+                [
+                    new TrailModule
+                    {
+                        Title = "Module 1: Introduction",
+                        Description = "Introduction to programming.",
+                        OrderIndex = 1,
+                        Assignments =
+                        [
+                            new Assignment
+                            {
+                                Title = "Assignment 1: Hello World",
+                                Description = "Write a program that prints 'Hello, World!' to the console.",
+                                DueDate = DateTime.UtcNow.AddDays(7),
+                                NeedsSubmission = true,
+                                Tags =
+                                [
+                                    "C#",
+                                    "Programming"
+                                ]
+                            },
+                            new Assignment
+                            {
+                                Title = "Assignment 2: Variables",
+                                Description = "Read.",
+                                DueDate = DateTime.UtcNow.AddDays(14),
+                                NeedsSubmission = false,
+                                ModuleContents =
+                                [
+                                    new ModuleContent
+                                    {
+                                        Title = "Variables",
+                                        OrderIndex = 1,
+                                    }                    
+                                ],
+                                Tags =
+                                [
+                                    "C#",
+                                    "Programming"
+                                ]
+                            }
+                        ]
+                    }
+                ]
             });
         }
     }
