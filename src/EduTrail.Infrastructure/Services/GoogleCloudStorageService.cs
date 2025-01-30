@@ -27,7 +27,7 @@ public class GoogleCloudStorageService : IFileStorageService
 
     public async Task<string> UploadFileAsync(Stream fileStream, string fileName, string contentType)
     {
-        var objectName = $"{basePath}{DateTime.UtcNow:yyyy/MM/dd}/{Guid.NewGuid()}-{fileName}";
+        var objectName = $"{basePath}/{DateTime.UtcNow:yyyy/MM/dd}/{Guid.NewGuid()}-{fileName}";
 
         var obj = await storageClient.UploadObjectAsync(
             bucketName,
