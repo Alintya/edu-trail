@@ -58,7 +58,7 @@ public static class ServiceCollectionExtensions
 
         // Infra
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
-        services.AddScoped<IFileStorageServiceFactory, FileStorageServiceFactory>();
+        services.AddSingleton<IFileStorageServiceFactory, FileStorageServiceFactory>();
 
         return services;
     }
