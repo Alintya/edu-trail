@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduTrail.WebUI.Tests", "tes
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D0DA2FD3-26C3-421C-B6F1-3D7DAC65AC93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduTrail.Application.IntegrationTests", "tests\EduTrail.Application.IntegrationTests\EduTrail.Application.IntegrationTests.csproj", "{3D8CA6F6-B14F-4F0F-A9C1-0CDBDFB6F02C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{D0DA2FD3-26C3-421C-B6F1-3D7DAC65AC93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0DA2FD3-26C3-421C-B6F1-3D7DAC65AC93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0DA2FD3-26C3-421C-B6F1-3D7DAC65AC93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D8CA6F6-B14F-4F0F-A9C1-0CDBDFB6F02C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D8CA6F6-B14F-4F0F-A9C1-0CDBDFB6F02C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D8CA6F6-B14F-4F0F-A9C1-0CDBDFB6F02C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D8CA6F6-B14F-4F0F-A9C1-0CDBDFB6F02C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,5 +79,6 @@ Global
 		{E5EFF256-6D48-4301-8007-27AE06C18033} = {5A41C71E-0F5D-45A1-885C-6A3A2AED5330}
 		{2F4AF27B-0E8B-4A04-8BCA-0E567873678B} = {4D1AEB16-4249-4972-9558-BCF2F8664C1D}
 		{2C564020-FB77-4286-A286-AAC15971E09D} = {4D1AEB16-4249-4972-9558-BCF2F8664C1D}
+		{3D8CA6F6-B14F-4F0F-A9C1-0CDBDFB6F02C} = {4D1AEB16-4249-4972-9558-BCF2F8664C1D}
 	EndGlobalSection
 EndGlobal
