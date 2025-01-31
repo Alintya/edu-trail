@@ -5,12 +5,15 @@
 <div class="dropArea @dropClass">
     Drag and drop file or click to select.
     <InputFile disabled="@uploading"
-               OnChange="OnInputFileChange"
-               @ondragenter="HandleDragEnter"
-               @ondragleave="HandleDragLeave" />
+    OnChange="OnInputFileChange"
+    @ondragenter="HandleDragEnter"
+    @ondragleave="HandleDragLeave" />
 </div>
 
 @code {
+    [Parameter]
+    public EventCallback<EduTrail.Domain.Entities.FileUpload> OnFileUploaded { get; set; }
+
     private bool uploading = false;
     private string dropClass = string.Empty;
 
@@ -45,6 +48,7 @@
                 );
 
                 // Handle successful upload
+                await OnFileUploaded.InvokeAsync(result);
             }
             catch (Exception ex)
             {

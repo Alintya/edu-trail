@@ -24,7 +24,14 @@
         <a href="javascript:void(0)" @onclick="ToggleOpen"><span>Aufgabe öffnen</span></a>
         @if (TrailAssignment.NeedsSubmission)
         {
-            <a href="javascript:void(0)" @onclick="ToggleShowUpload"><span>Lösung hochladen</span></a>
+            if (TrailAssignment.Submissions.Any())
+            {
+                <p>Submitted at @TrailAssignment.Submissions.First().SubmittedAt</p>
+            }
+            else
+            {
+                <a href="javascript:void(0)" @onclick="ToggleShowUpload"><span>Lösung hochladen</span></a>
+            }
         }
         else
         {
@@ -38,7 +45,7 @@
     <div class="modal">
         <div class="modal-content">
             <span class="close" @onclick="ToggleShowUpload">&times;</span>
-            <FileUpload />
+            <FileUpload OnFileUploaded="OnFileUploaded"/>
         </div>
     </div>
 }
@@ -57,6 +64,23 @@
     public void ToggleOpen() => Expanded = !Expanded;
 
     private void ToggleShowUpload() => showUpload = !showUpload;
+
+    private void OnFileUploaded(EduTrail.Domain.Entities.FileUpload file)
+    {
+        TrailAssignment.Submissions.Add(new AssignmentSubmission()
+            {
+                Assignment = TrailAssignment,
+                SubmittedAt = DateTime.Now,
+            });
+
+        TrailAssignment.Progress.Add(new StudentProgress()
+            {
+                Assignment = TrailAssignment,
+                Student = new Student(), // TODO
+            });
+
+        ToggleShowUpload();
+    }
 }
 
 <style>
