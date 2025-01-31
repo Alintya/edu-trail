@@ -22,21 +22,36 @@
 
     <div class="download">
         <a href="javascript:void(0)" @onclick="ToggleOpen"><span>Aufgabe @(Expanded ? "schließen" : "öffnen")</span></a>
-        @if (TrailAssignment.NeedsSubmission)
-        {
-            if (TrailAssignment.Submissions.Any())
-            {
-                <p>Submitted at @TrailAssignment.Submissions.First().SubmittedAt</p>
-            }
-            else
-            {
-                <a href="javascript:void(0)" @onclick="ToggleShowUpload"><span>Lösung hochladen</span></a>
-            }
-        }
-        else
-        {
-            <a href="javascript:void(0)"><span>✔️</span>Geschafft</a>
-        }
+
+        <AuthorizeView>
+            <Authorized>
+                @if (TrailAssignment.NeedsSubmission)
+                {
+                    if (TrailAssignment.Submissions.Any())
+                    {
+                        <p>Submitted at @TrailAssignment.Submissions.First().SubmittedAt</p>
+                    }
+                    else
+                    {
+                        <span>Due @TrailAssignment.DueDate</span><a href="javascript:void(0)" @onclick="ToggleShowUpload"><span>Lösung hochladen</span></a>
+                    }
+                }
+                else
+                {
+                    if (TrailAssignment.Progress.Any())
+                    {
+                        <span>✔️</span>
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)" @onclick="MarkDone"><span>✔️</span>Geschafft</a>
+                    }
+                }
+            </Authorized>
+            <NotAuthorized>
+                Login first
+            </NotAuthorized>
+        </AuthorizeView>
     </div>
 </div>
 
@@ -72,14 +87,18 @@
                 Assignment = TrailAssignment,
                 SubmittedAt = DateTime.Now,
             });
+        MarkDone();
 
+        ToggleShowUpload();
+    }
+
+    private void MarkDone()
+    {
         TrailAssignment.Progress.Add(new StudentProgress()
             {
                 Assignment = TrailAssignment,
                 Student = new Student(), // TODO
             });
-
-        ToggleShowUpload();
     }
 }
 
