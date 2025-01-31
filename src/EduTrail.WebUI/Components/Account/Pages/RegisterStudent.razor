@@ -107,9 +107,7 @@
             return;
         }
 
-        var currentUser = await UserManager.FindByNameAsync(user.UserName);
-
-        var roleresult = await UserManager.AddToRoleAsync(currentUser, "Student");
+        var roleresult = await UserManager.AddToRoleAsync(user, "Student");
 
         Logger.LogInformation("User created a new account with password.");
 

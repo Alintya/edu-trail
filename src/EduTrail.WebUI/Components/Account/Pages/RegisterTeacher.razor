@@ -3,6 +3,7 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Text
 @using System.Text.Encodings.Web
+@using EduTrail.Application.Interfaces
 @using EduTrail.Infrastructure.Identity
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
@@ -16,6 +17,7 @@
 @inject ILogger<RegisterTeacher> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject ITeacherAppService TeacherService
 
 <PageTitle>Registrieren</PageTitle>
 
@@ -27,6 +29,16 @@
         <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
+            <div class="form-floating">
+                <label class="form-label" for="firstname">Vorname</label>
+                <InputText @bind-Value="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="Maximilian" />
+                <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+            </div>
+            <div class="form-floating">
+                <label class="form-label" for="lastname">Nachname</label>
+                <InputText @bind-Value="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="Mustermann" />
+                <ValidationMessage For="() => Input.LastName" class="text-danger" />
+            </div>
             <div class="form-floating">
                 <label class="form-label" for="email">E-Mailadresse</label>
                 <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@beispiel.de" />
@@ -60,11 +72,17 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
-        var user = CreateUser();
+        var user = Activator.CreateInstance<ApplicationUser>();
 
-        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+        var teacherId = await TeacherService.CreateTeacherAsync(Input.FirstName, Input.LastName);
+
+        user.ProfileId = teacherId;
+
+        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+
         var result = await UserManager.CreateAsync(user, Input.Password);
 
         if (!result.Succeeded)
@@ -72,6 +90,8 @@
             identityErrors = result.Errors;
             return;
         }
+
+        var roleresult = await UserManager.AddToRoleAsync(user, "Teacher");
 
         Logger.LogInformation("User created a new account with password.");
 
@@ -95,19 +115,6 @@
         RedirectManager.RedirectTo(ReturnUrl);
     }
 
-    private ApplicationUser CreateUser()
-    {
-        try
-        {
-            return Activator.CreateInstance<ApplicationUser>();
-        }
-        catch
-        {
-            throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
-                $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor.");
-        }
-    }
-
     private IUserEmailStore<ApplicationUser> GetEmailStore()
     {
         if (!UserManager.SupportsUserEmail)
@@ -119,6 +126,16 @@
 
     private sealed class InputModel
     {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        [Display(Name = "FirstName")]
+        public string FirstName { get; set; } = "";
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        [Display(Name = "LastName")]
+        public string LastName { get; set; } = "";
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
