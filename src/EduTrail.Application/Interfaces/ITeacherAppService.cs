@@ -6,11 +6,12 @@ public interface ITeacherAppService
 {
     Task<Guid> CreateTeacherAsync(string firstName, string lastName);
 
+    Task<Class> GetClassAsync(Guid classId);
     Task<IEnumerable<Class>> GetClassesAsync(Guid teacherId);
     Task CreateClassAsync(string name, Guid teacherId);
     Task SetClassNameAsync(Guid classId, string name);
     Task DeleteClassAsync(Guid classId);
-    Task<int> GenerateClassCodeAsync(Guid classId);
+    Task<string> GenerateClassCodeAsync(Guid classId);
     Task<IEnumerable<LearningTrail>> GetTrailsForClassAsync(Guid classId);
     Task AddTrailToClassAsync(Guid trailId, Guid classId);
     Task RemoveTrailFromClassAsync(Guid trailId, Guid classId);

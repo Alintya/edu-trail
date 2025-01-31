@@ -1,0 +1,45 @@
+﻿﻿@using EduTrail.Domain.Entities
+
+@inject NavigationManager NavigationManager
+
+<div class="traillist">
+    <table>
+        <thead>
+            <tr>
+                <th>Klasse</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <th>Lehrer</th>
+                    </Authorized>
+                </AuthorizeView>
+                <th>Optionen</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Students)
+            {
+                <tr>
+                    <td>TODO</td>
+                    <td>@student.FirstName</td>
+                    <td>@student.LastName</td>
+                    <AuthorizeView Roles="Admin">
+                        <Authorized>
+                            <td>TODO</td>
+                        </Authorized>
+                    </AuthorizeView>
+                    <td>
+                        <a href="/class/@student.Id">Passwort zurücksetzen</a>
+                        <a href="/class/@student.Id">Entfernen</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public List<Student> Students { get; set; } = [];
+}

@@ -40,9 +40,9 @@ public class TeacherAppService(ITeacherRepository teacherRepository, IClassRepos
         throw new NotImplementedException();
     }
 
-    public Task DeleteClassAsync(Guid classId)
+    public async Task DeleteClassAsync(Guid classId)
     {
-        throw new NotImplementedException();
+        await classRepository.DeleteByIdAsync(classId);
     }
 
     public Task DeleteTrailAsync(Guid trailId)
@@ -50,9 +50,14 @@ public class TeacherAppService(ITeacherRepository teacherRepository, IClassRepos
         throw new NotImplementedException();
     }
 
-    public Task<int> GenerateClassCodeAsync(Guid classId)
+    public async Task<string> GenerateClassCodeAsync(Guid classId)
     {
-        throw new NotImplementedException();
+        return "12345";  // TODO
+    }
+
+    public Task<Class> GetClassAsync(Guid classId)
+    {
+        return classRepository.GetClassWithStudentsAsync(classId);
     }
 
     public async Task<IEnumerable<Class>> GetClassesAsync(Guid teacherId)

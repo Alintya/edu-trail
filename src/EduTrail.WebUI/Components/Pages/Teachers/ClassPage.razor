@@ -1,10 +1,66 @@
 ﻿@page "/class/{classId:guid?}"
 
+@using EduTrail.Application.Interfaces
+@using EduTrail.Domain.Entities
+
 @attribute [Authorize(Roles = "Admin, Teacher")]
 
-<h3>ClassDashboard</h3>
+@rendermode InteractiveServer
+
+@inject ITeacherAppService TeacherService
+
+@if (Class is not null)
+{
+    <h1>Lerngruppe @Class.Name</h1>
+    <p>@Class.Description</p>
+
+    <AuthorizeView Roles="Teacher">
+        <Authorized>
+            @if (Code is not null && Code != string.Empty)
+            {
+                <p>Beitrittscode: @Code</p>
+            }
+            else
+            {
+                <button @onclick="ShowCode">Beitrittscode anzeigen</button>
+            }
+        </Authorized>
+    </AuthorizeView>
+
+    <StudentList Students="@Students" />
+}
+else
+{
+    <p>Loading...</p>
+}
 
 @code {
     [Parameter]
     public Guid? ClassId { get; set; }
+
+    private Class? Class { get; set; }
+    private List<Student> Students { get; set; } = new();
+
+    private string? Code { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ClassId.HasValue)
+        {
+            Class = await TeacherService.GetClassAsync(ClassId.Value);
+        }
+        if (Class is not null)
+        {
+            Students = Class.Students.Select(s => s.Student).ToList();
+        }
+    }
+
+    private async Task ShowCode()
+    {
+        if (Class is not null)
+        {
+            var code = await TeacherService.GenerateClassCodeAsync(Class.Id);
+            Code = code;
+        }
+    }
 }
