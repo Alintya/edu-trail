@@ -1,0 +1,80 @@
+﻿<div class="dropArea @dropClass">
+    Drag and drop file or click to select.
+    <InputFile disabled="@uploading"
+               OnChange="OnInputFileChange"
+               @ondragenter="HandleDragEnter"
+               @ondragleave="HandleDragLeave" />
+</div>
+
+@code {
+    private bool uploading = false;
+    private string dropClass = string.Empty;
+
+    void HandleDragEnter()
+    {
+        dropClass = "dropAreaDrug";
+    }
+    void HandleDragLeave()
+    {
+        dropClass = string.Empty;
+    }
+
+    async Task OnInputFileChange(InputFileChangeEventArgs args)
+    {
+        dropClass = string.Empty;
+
+        try
+        {
+            uploading = true;
+            await InvokeAsync(StateHasChanged);
+
+            var stream = args.File.OpenReadStream();
+            string justFileName = Path.GetFileNameWithoutExtension(args.File.Name);
+
+            // TODO: save
+
+            //await ListFiles();
+
+            uploading = false;
+
+        }
+        catch (Exception ex)
+        {
+            uploading = false;
+            await InvokeAsync(StateHasChanged);
+            throw;
+        }
+    }
+}
+
+<style>
+    .dropArea {
+        border: 2px dashed gray;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: lightgray;
+        font-size: 1.5rem;
+        cursor: pointer;
+        position: relative;
+        min-height: 150px;
+    }
+
+        .dropArea:hover {
+            background-color: antiquewhite;
+            color: #333;
+        }
+
+        .dropArea input[type=file] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .dropAreaDrug {
+        background-color: darkgray;
+    }
+</style>

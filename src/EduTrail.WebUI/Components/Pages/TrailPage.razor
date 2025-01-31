@@ -4,6 +4,8 @@
 
 @page "/trail/{TrailId:guid}"
 
+@rendermode InteractiveServerRenderModeNoPreRender
+
 @inject ITrailAppService TrailService
 
 @if (LearningTrail is not null)

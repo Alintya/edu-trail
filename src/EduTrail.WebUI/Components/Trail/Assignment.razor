@@ -1,5 +1,7 @@
 ﻿@using EduTrail.Domain.Entities
 
+
+
 <div class="lesson">
     <h3>@TrailAssignment.Title</h3>
     <p>@TrailAssignment.Description</p>
@@ -9,14 +11,37 @@
             <span class="tag">@tag</span>
         }
     </div>
-    <div class="download">
-        <a href="#"><span>Aufgabe öffnen</span></a>
-        @if(TrailAssignment.NeedsSubmission)
+
+    @if (Expanded)
+    {
+        @foreach (var c in TrailAssignment.Contents)
         {
-            <a href="#"><span>Lösung hochladen</span></a>
+            <Content AssignmentContent="c" />
+        }
+    }
+
+    <div class="download">
+        <a href="javascript:void(0)" @onclick="ToggleOpen"><span>Aufgabe öffnen</span></a>
+        @if (TrailAssignment.NeedsSubmission)
+        {
+            <a href="javascript:void(0)" @onclick="ToggleShowUpload"><span>Lösung hochladen</span></a>
+        }
+        else
+        {
+            <a href="javascript:void(0)"><span>✔️</span>Geschafft</a>
         }
     </div>
 </div>
+
+@if (showUpload)
+{
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close" @onclick="ToggleShowUpload">&times;</span>
+            <FileUpload />
+        </div>
+    </div>
+}
 
 @code {
     [Parameter]
@@ -24,4 +49,49 @@
 
     [Parameter]
     public bool Edit { get; set; }
+    [Parameter]
+    public bool Expanded { get; set; }
+
+    private bool showUpload { get; set; }
+
+    public void ToggleOpen() => Expanded = !Expanded;
+
+    private void ToggleShowUpload() => showUpload = !showUpload;
 }
+
+<style>
+    .modal {
+        display: block;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 800px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .close:hover {
+            color: black;
+        }
+</style>
