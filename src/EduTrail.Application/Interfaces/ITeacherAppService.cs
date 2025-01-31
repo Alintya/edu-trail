@@ -4,7 +4,7 @@ namespace EduTrail.Application.Interfaces;
 
 public interface ITeacherAppService
 {
-    Task CreateTeacherAsync(string surName, string lastName, string email, string school, string password);
+    Task<Guid> CreateTeacherAsync(string firstName, string lastName);
 
     Task<IEnumerable<Class>> GetClassesAsync(Guid teacherId);
     Task CreateClassAsync(string name, Guid teacherId);

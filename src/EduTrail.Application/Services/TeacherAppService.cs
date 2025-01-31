@@ -1,9 +1,10 @@
 using EduTrail.Application.Interfaces;
 using EduTrail.Domain.Entities;
+using EduTrail.Domain.Interfaces;
 
 namespace EduTrail.Application.Services;
 
-public class TeacherAppService() : ITeacherAppService
+public class TeacherAppService(ITeacherRepository teacherRepository, IClassRepository classRepository) : ITeacherAppService
 {
     public Task AddClassToTrailAsync(Guid classId, Guid trailId)
     {
@@ -15,14 +16,23 @@ public class TeacherAppService() : ITeacherAppService
         throw new NotImplementedException();
     }
 
-    public Task CreateClassAsync(string name, Guid teacherId)
+    public async Task CreateClassAsync(string name, Guid teacherId)
     {
-        throw new NotImplementedException();
+        var newClass = new Class
+        {
+            Name = name,
+            TeacherId = teacherId
+        };
+        await classRepository.AddAsync(newClass);
     }
 
-    public Task CreateTeacherAsync(string surName, string lastName, string email, string school, string password)
+    public async Task<Guid> CreateTeacherAsync(string firstName, string lastName)
     {
-        throw new NotImplementedException();
+        return (await teacherRepository.AddAsync(new Teacher
+        {
+            FirstName = firstName,
+            LastName = lastName
+        })).Id;
     }
 
     public Task CreateTrailAsync(string name, Guid teacherId)
@@ -45,9 +55,9 @@ public class TeacherAppService() : ITeacherAppService
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Class>> GetClassesAsync(Guid teacherId)
+    public async Task<IEnumerable<Class>> GetClassesAsync(Guid teacherId)
     {
-        throw new NotImplementedException();
+        return await classRepository.GetClassesWithStudentsByTeacherIdAsync(teacherId);
     }
 
     public Task<IEnumerable<Class>> GetClassesForTrailAsync(Guid trailId)

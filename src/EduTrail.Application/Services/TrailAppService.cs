@@ -15,11 +15,6 @@ public class TrailAppService(ILearningTrailRepository trailRepository, IModuleCo
         return await trailRepository.GetTrailWithModulesAsync(id);
     }
 
-    public async Task<IEnumerable<LearningTrail>> GetAllTrailsAsync()
-    {
-        return await trailRepository.GetAllAsync();
-    }
-
     public async Task<Stream> OpenAssignmentContentAsync(Guid assignmentContentId)
     {
         throw new NotImplementedException();

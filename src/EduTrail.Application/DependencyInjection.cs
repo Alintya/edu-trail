@@ -14,6 +14,7 @@ public static class DependencyInjection
         services.AddScoped<ITrailAppService, TrailAppService>();
         services.AddScoped<IStudentAppService, StudentAppService>();
         services.AddScoped<ITeacherAppService, TeacherAppService>();
+        services.AddScoped<IAdminAppService, AdminAppService>();
 
         return services;
     }
