@@ -6,6 +6,10 @@ services:
       dockerfile: src/EduTrail.WebUI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Release
+      - EDUTRAIL_ConnectionStrings__DefaultConnection=Host=edutrail.db;Port=5432;Database=edutrail;Username=edutrail;Password=edutrail-db-pw
+      # Created on first startup
+      #- EDUTRAIL_DefaultAdminUser__Email=admin@example.com
+      #- EDUTRAIL_DefaultAdminUser__Password=MyAdminPassword123!
     depends_on: 
       edutrail.db:
         condition: service_healthy
