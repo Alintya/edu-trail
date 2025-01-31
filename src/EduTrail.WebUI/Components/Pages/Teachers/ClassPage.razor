@@ -18,11 +18,11 @@
         <Authorized>
             @if (Code is not null && Code != string.Empty)
             {
-                <p>Beitrittscode: @Code</p>
+                <p style="margin-bottom: 2rem; color: blueviolet; font-weight: 700;">Beitrittscode: @Code</p>
             }
             else
             {
-                <button @onclick="ShowCode">Beitrittscode anzeigen</button>
+                <button @onclick="ShowCode" style="margin-bottom: 1rem;">Beitrittscode anzeigen</button>
             }
         </Authorized>
     </AuthorizeView>
