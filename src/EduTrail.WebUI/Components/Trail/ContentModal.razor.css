@@ -1,0 +1,103 @@
+﻿.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.5s;
+    border: none;
+    animation: Show 0.5s ease-out;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    height: 1.7rem;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    right: 10px;
+    top: 10px;
+}
+
+    .close::after {
+        content: '×';
+    }
+
+    .close:hover {
+        color: #6a1b9a;
+    }
+
+.tab {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    gap: 2px;
+    min-height: 1.5rem;
+}
+
+.tabitem {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    margin: 0 0 -1px 0;
+    min-width: 100px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 10px 10px 0 0;
+}
+
+    .tabitem.active {
+        border-bottom: 1px solid #f9f9fa !important;
+        z-index: 1;
+        border: 1px #6a1b9a solid;
+        box-shadow: 0 -6px 10px rgba(0, 0, 0, 0.1);
+        background: #f9f9fa;
+    }
+
+    .tabitem:hover {
+        color: #6a1b9a;
+    }
+
+@keyframes Show {
+    0% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+

@@ -1,28 +1,13 @@
 ﻿@using EduTrail.Domain.Entities
 
-<div class="flex">
-    <h4>
-        @AssignmentContent.Title
-    </h4>
-    @switch (AssignmentContent.ContentType)
-    {
-        case AssignmentContentType.Pdf:
-            <button @onclick="OpenPdfPopup">Show PDF</button>
-            break;
-        default:
-            <p>@AssignmentContent.ContentUrl</p>
-            break;
-    }
-</div>
-
-@if (showPopup)
+@switch (AssignmentContent.ContentType)
 {
-    <div class="modal">
-        <div class="modal-content">
-            <span class="close" @onclick="ClosePdfPopup">&times;</span>
-            <iframe src="@contentUrl" width="100%" height="600px"></iframe>
-        </div>
-    </div>
+    case AssignmentContentType.Pdf:
+        <iframe src="@contentUrl" width="100%" height="600px"></iframe>
+        break;
+    default:
+        <p>@AssignmentContent.ContentUrl</p>
+        break;
 }
 
 @code {
@@ -51,46 +36,3 @@
         showPopup = false;
     }
 }
-
-<style>
-    .flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .modal {
-        display: block;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal-content {
-        background-color: #fff;
-        margin: 10% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 800px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-        .close:hover {
-            color: black;
-        }
-</style>

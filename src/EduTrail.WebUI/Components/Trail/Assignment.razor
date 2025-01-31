@@ -12,16 +12,15 @@
         }
     </div>
 
-    @if (Expanded)
+    @if (IsContentOpen)
     {
-        @foreach (var c in TrailAssignment.Contents)
-        {
-            <Content AssignmentContent="c" />
-        }
+        <ContentModal OnClose="ToggleOpen" TrailAssignment="TrailAssignment" />
     }
-
     <div class="download">
-        <a href="javascript:void(0)" @onclick="ToggleOpen"><span>Aufgabe @(Expanded ? "schließen" : "öffnen")</span></a>
+        @if (TrailAssignment.Contents.Any())
+        {
+            <a href="javascript:void(0)" @onclick="ToggleOpen"><span>Aufgabe @(IsContentOpen ? "schließen" : "öffnen")</span></a>
+        }
 
         <AuthorizeView>
             <Authorized>
@@ -29,11 +28,17 @@
                 {
                     if (TrailAssignment.Submissions.Any())
                     {
-                        <p>Submitted at @TrailAssignment.Submissions.First().SubmittedAt</p>
+                        <div class="submitted">
+                            <p>Ergebnis hochgeladen am @TrailAssignment.Submissions.First().SubmittedAt.ToLocalTime().ToString("dd.MM HH:mm")</p>
+                        </div>
                     }
                     else
                     {
-                        <span>Due @TrailAssignment.DueDate</span><a href="javascript:void(0)" @onclick="ToggleShowUpload"><span>Lösung hochladen</span></a>
+                        <div class="submitdue">
+                            <p>Abgabe bis spätestens: @TrailAssignment.DueDate?.ToLocalTime().ToString("dd.MM HH:mm")</p>
+                        </div>
+
+                        <a href="javascript:void(0)" @onclick="ToggleShowUpload"><span>Lösung hochladen</span></a>
                     }
                 }
                 else
@@ -72,11 +77,11 @@
     [Parameter]
     public bool Edit { get; set; }
     [Parameter]
-    public bool Expanded { get; set; }
+    public bool IsContentOpen { get; set; }
 
     private bool showUpload { get; set; }
 
-    public void ToggleOpen() => Expanded = !Expanded;
+    public void ToggleOpen() => IsContentOpen = !IsContentOpen;
 
     private void ToggleShowUpload() => showUpload = !showUpload;
 

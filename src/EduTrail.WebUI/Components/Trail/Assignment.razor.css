@@ -93,3 +93,17 @@
     .download a:hover::before {
         animation: gradient-animation ease-in infinite 2s;
     }
+
+.submitted, .submitdue {
+    padding: 10px 20px;
+    background: #f6fcf9;
+    border: 1px solid #1b9a64;
+    border-radius: 10px;
+    color: #1b9a64;
+}
+
+.submitdue {
+    background: white;
+    border: 1px solid #6a1b9a;
+    color: #6a1b9a;
+}

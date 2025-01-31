@@ -1,0 +1,40 @@
+﻿@using EduTrail.Domain.Entities
+
+<div class="modal">
+    <div class="modal-content">
+        <ul class="tab">
+            @if (TrailAssignment.Contents.Count > 1)
+            {
+                @foreach (var c in TrailAssignment.Contents)
+                {
+                    <li class="tabitem @(c == SelectedContent ? "active" : "")">@c.Title</li>
+                }
+            }
+        </ul>
+
+        <div class="close" @onclick="OnClose"></div>
+
+        @if (SelectedContent is not null)
+        {
+            <Content AssignmentContent="SelectedContent" />
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public EduTrail.Domain.Entities.Assignment TrailAssignment { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private AssignmentContent? SelectedContent { get; set; }
+    private string contentUrl = string.Empty;
+
+    protected override Task OnInitializedAsync()
+    {
+        SelectedContent = TrailAssignment.Contents.FirstOrDefault();
+        return base.OnInitializedAsync();
+    }
+}
