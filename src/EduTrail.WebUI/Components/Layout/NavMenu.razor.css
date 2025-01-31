@@ -7,7 +7,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
+    .top-row ::deep a, .top-row ::deep .btn-link, button {
         white-space: nowrap;
         margin-left: 10px;
         text-decoration: none;
@@ -15,10 +15,17 @@
         padding: 10px 20px;
         border-radius: 10px;
         color: #6a1b9a;
+        transition: all 0.3s;
+        outline: none;
+        cursor: pointer;
+        border: none;
+        font-size: 1rem;
     }
 
-        .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-            text-decoration: underline;
+        .top-row ::deep a:hover, .top-row ::deep .btn-link:hover, button:hover {
+            text-decoration: none;
+            background: #6a1b9a;
+            color: white;
         }
 
         .top-row ::deep a:first-child {
