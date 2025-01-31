@@ -21,7 +21,7 @@
     }
 
     <div class="download">
-        <a href="javascript:void(0)" @onclick="ToggleOpen"><span>Aufgabe öffnen</span></a>
+        <a href="javascript:void(0)" @onclick="ToggleOpen"><span>Aufgabe @(Expanded ? "schließen" : "öffnen")</span></a>
         @if (TrailAssignment.NeedsSubmission)
         {
             if (TrailAssignment.Submissions.Any())
