@@ -135,8 +135,15 @@ public class AssignmentContentConfiguration : IEntityTypeConfiguration<Assignmen
             .IsRequired();
 
         builder.Property(mc => mc.ContentType)
-            .HasMaxLength(50)
+            .HasConversion(
+                v => v.ToString(),
+                v => Enum.Parse<AssignmentContentType>(v))
             .IsRequired();
+
+        builder.HasOne(c => c.File)
+            .WithMany(t => t.AssignmentContents)
+            .HasForeignKey(c => c.FileUploadId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(mc => mc.ContentUrl)
             .HasMaxLength(1000)

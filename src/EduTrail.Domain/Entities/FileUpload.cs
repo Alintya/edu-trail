@@ -10,6 +10,9 @@ public class FileUpload
     public string UploadedBy { get; set; } = string.Empty;
     public string DisplayName { get; set; } = string.Empty;
 
+    // Navigation properties
+    public ICollection<AssignmentContent> AssignmentContents { get; set; } = [];
+
     public FileUpload()
     {
         UploadedAt = DateTime.UtcNow;
