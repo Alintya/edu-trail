@@ -17,6 +17,8 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 
+@inject IJSRuntime JSRuntime
+
 <PageTitle>Registrieren</PageTitle>
 
 <h1>Registrieren</h1>
@@ -28,29 +30,22 @@
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
             <div class="pin-container">
-                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 0)" placeholder="•">
-                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 1)" placeholder="•">
-                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 2)" placeholder="•">
-                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 3)" placeholder="•">
-                <input type="text" class="pin-input" maxlength="1" oninput="moveToNext(this, 4)" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" @oninput="@((args) => NextInput(0))" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" @oninput="@((args) => NextInput(1))" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" @oninput="@((args) => NextInput(2))" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" @oninput="@((args) => NextInput(3))" placeholder="•">
+                <input type="text" class="pin-input" maxlength="1" @oninput="@((args) => NextInput(4))" placeholder="•">
             </div>
-            <script>
-                function moveToNext(input, index) {
-                    const inputs = document.querySelectorAll(".pin-input");
-                    if (input.value.length === 1 && index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-                    }
-                }
-            </script>
+
             <div class="form-floating">
                 <label class="form-label" for="firstname">Vorname</label>
                 <InputText @bind-Value="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="Maximilian" />
                 <ValidationMessage For="() => Input.FirstName" class="text-danger" />
             </div>
             <div class="form-floating">
-                <label class="form-label" for="secondname">Nachname</label>
-                <InputText @bind-Value="Input.SecondName" class="form-control" autocomplete="secondname" aria-required="true" placeholder="Mustermann" />
-                <ValidationMessage For="() => Input.SecondName" class="text-danger" />
+                <label class="form-label" for="lastname">Nachname</label>
+                <InputText @bind-Value="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="Mustermann" />
+                <ValidationMessage For="() => Input.LastName" class="text-danger" />
             </div>
             <div class="form-floating">
                 <label class="form-label" for="password">Passwort</label>
@@ -67,6 +62,15 @@
     </div>
 </div>
 
+<script>
+    function moveToNext(input, index) {
+    const inputs = document.querySelectorAll(".pin-input");
+    if (inputs[index].value.length === 1 && index < inputs.length - 1) {
+    inputs[index + 1].focus();
+    }
+    }
+</script>
+
 @code {
     private IEnumerable<IdentityError>? identityErrors;
 
@@ -80,26 +84,65 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
-       
+        var user = Activator.CreateInstance<ApplicationUser>();
+
+        var username = $"{Input.FirstName.Substring(0, 1)}{Input.LastName}";
+
+        var profile = new Domain.Entities.Student()
+            {
+                FirstName = Input.FirstName,
+                LastName = Input.LastName,
+                StudentNumber = "TODO",
+            };
+
+        user.Profile = profile;
+
+        await UserStore.SetUserNameAsync(user, username, CancellationToken.None);
+        
+        var result = await UserManager.CreateAsync(user, Input.Password);
+
+        if (!result.Succeeded)
+        {
+            identityErrors = result.Errors;
+            return;
+        }
+
+        var currentUser = await UserManager.FindByNameAsync(user.UserName);
+
+        var roleresult = await UserManager.AddToRoleAsync(currentUser, "Student");
+
+        Logger.LogInformation("User created a new account with password.");
+
+        var userId = await UserManager.GetUserIdAsync(user);
+
+        await SignInManager.SignInAsync(user, isPersistent: false);
+        RedirectManager.RedirectTo(ReturnUrl);
     }
 
+    private async Task NextInput(int index)
+    {
+        if (index < 4)
+        {
+            await JSRuntime.InvokeVoidAsync("moveToNext", index);
+        }
+    }
 
     private sealed class InputModel
     {
-        [Required]
-        [StringLength(5, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
-        [Display(Name = "PIN")]
-        public string PIN { get; set; } = "";
+        // [Required]
+        // [StringLength(5, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
+        // [Display(Name = "PIN")]
+        // public string PIN { get; set; } = "11111";
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
         [Display(Name = "FirstName")]
         public string FirstName { get; set; } = "";
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [Display(Name = "SecondName")]
-        public string SecondName { get; set; } = "";
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        [Display(Name = "LastName")]
+        public string LastName { get; set; } = "";
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
