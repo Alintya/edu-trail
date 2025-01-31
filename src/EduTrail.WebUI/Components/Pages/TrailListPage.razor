@@ -1,0 +1,26 @@
+@page "/trails/"
+@page "/trail/"
+@using EduTrail.Application.Interfaces
+@using EduTrail.Domain.Entities
+
+@inject ITrailAppService TrailService
+
+<h1>Trails</h1>
+
+@if (Trails is not null)
+{
+    <TrailList Trails="Trails" />
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private List<LearningTrail>? Trails { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Trails = (await TrailService.GetAllTrailsAsync()).ToList();
+    }
+}

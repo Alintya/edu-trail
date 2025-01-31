@@ -1,0 +1,24 @@
+﻿@using EduTrail.Domain.Entities
+
+<div class="container">
+    <div class="header">
+        <h1>@LearningTrail.Title</h1>
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
+    </div>
+
+    @foreach (var trailModule in LearningTrail.Modules.OrderBy(item => item.OrderIndex))
+    {
+        <Module Edit="Edit" TrailModule="trailModule" />
+    }
+</div>
+
+
+@code {
+    [Parameter]
+    public LearningTrail LearningTrail { get; set; } = new();
+
+    [Parameter]
+    public bool Edit { get; set; }
+}

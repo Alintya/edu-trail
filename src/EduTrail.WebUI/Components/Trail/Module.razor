@@ -1,0 +1,46 @@
+﻿@using EduTrail.Domain.Entities
+@using EduTrail.Infrastructure.Data
+@using Microsoft.EntityFrameworkCore
+
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+
+<div class="section">
+    <div class="section-title">
+        <div class="number">1</div>
+        <div class="head">
+            <h2>@TrailModule.Title</h2>
+            <div class="btns">
+                @if (Edit)
+                {
+                    @*  <button>Duplizieren</button> *@
+                    <button>Modul löschen</button>
+                }
+            </div>
+        </div>
+
+        @if (Edit)
+        {
+            <textarea>@TrailModule.Description</textarea>
+        }
+        else
+        {
+            <p>@TrailModule.Description</p>
+        }
+    </div>
+    @foreach (var assignment in TrailModule.Assignments)
+    {
+        <Assignment Edit="Edit" TrailAssignment=assignment />
+    }
+    @if (Edit)
+    {
+        <button>Aufgabe hinzufügen</button>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public TrailModule TrailModule { get; set; } = new();
+
+    [Parameter]
+    public bool Edit { get; set; }
+}

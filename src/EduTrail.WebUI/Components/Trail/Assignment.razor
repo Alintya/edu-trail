@@ -1,0 +1,27 @@
+﻿@using EduTrail.Domain.Entities
+
+<div class="lesson">
+    <h3>@TrailAssignment.Title</h3>
+    <p>@TrailAssignment.Description</p>
+    <div class="tags">
+        @foreach (var tag in TrailAssignment.Tags)
+        {
+            <span class="tag">@tag</span>
+        }
+    </div>
+    <div class="download">
+        <a href="#"><span>Aufgabe öffnen</span></a>
+        @if(TrailAssignment.NeedsSubmission)
+        {
+            <a href="#"><span>Lösung hochladen</span></a>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public EduTrail.Domain.Entities.Assignment TrailAssignment { get; set; } = new();
+
+    [Parameter]
+    public bool Edit { get; set; }
+}

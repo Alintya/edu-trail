@@ -1,15 +1,24 @@
-.page {
+﻿.page {
     position: relative;
     height: 100%;
 }
 
 main {
-    display: grid;
-    grid-template-rows: auto 1fr;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
-.sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+.content {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.5s;
+    width: 400px;
 }
 
 #blazor-error-ui {

@@ -2,7 +2,63 @@
 
 @inject NavigationManager NavigationManager
 
-<div class="top-row ps-3 navbar navbar-dark">
+<nav>
+    <div class="top-row">
+        <Branding />
+        <div class="top-row-nav">
+            <AuthorizeView Roles="Admin">
+                <NavLink href="/admin">Administration</NavLink>
+            </AuthorizeView>
+
+            <!--Lehrer-->
+            <AuthorizeView Roles="Admin, Teacher">
+                <NavLink href="/classes">Meine Lernpfade</NavLink>
+                <NavLink href="/trails">Meine Lerngruppen</NavLink>
+            </AuthorizeView>
+
+            <!--Schüler-->
+            <AuthorizeView Roles="Student">
+                <NavLink href="/trails" target="_blank">Lernpfade</NavLink>
+            </AuthorizeView>
+
+            <!--Allgemein-->
+            <NavLink href="/" target="_blank">Katalog</NavLink>
+            <NavLink href="/impressum">Impressum</NavLink>
+            
+            <AuthorizeView>
+                <Authorized>
+                    <NavLink class="" href="Account/Manage">
+                        @context.User.Identity?.Name
+                    </NavLink>
+                        <form action="Account/Logout" method="post">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                            <button type="submit" class="">
+                                Logout
+                            </button>
+                        </form>
+                </Authorized>
+                <NotAuthorized>
+@*                         <NavLink class="" href="Account/Register">
+                            Register
+                        </NavLink> *@
+                        <NavLink class="" href="Account/Login">
+                            Anmelden
+                        </NavLink>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+@* <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">EduTrail</a>
     </div>
@@ -15,6 +71,12 @@
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-arrow-down-right-square-fill" aria-hidden="true"></span> Lernpfad
             </NavLink>
         </div>
 
@@ -67,7 +129,7 @@
             </NotAuthorized>
         </AuthorizeView>
     </nav>
-</div>
+</div> *@
 
 @code {
     private string? currentUrl;
@@ -89,4 +151,3 @@
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
-

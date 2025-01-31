@@ -1,0 +1,40 @@
+﻿@using EduTrail.Domain.Entities
+
+ @inject NavigationManager NavigationManager
+
+<div class="traillist">
+    <table>
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Ersteller</th>
+                <th>Erstellungsdatum</th>
+                <th>Veröffentlicht</th>
+                <th>Beschreibung</th>
+                <th>Optionen</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trail in Trails)
+            {
+                <tr>
+                    <td>@trail.Title</td>
+                    <td>@trail.CreatedBy</td>
+                    <td>@trail.CreatedAt</td>
+                    <td>@trail.IsPublished</td>
+                    <td>@trail.Description</td>
+                    <td>
+                        <a href="/trail/@trail.Id">Öffnen</a>
+                        <a href="/trail/@trail.Id">Bearbeiten</a>
+                        <a href="/trail/@trail.Id">Löschen</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public List<LearningTrail> Trails { get; set; } = [];
+}

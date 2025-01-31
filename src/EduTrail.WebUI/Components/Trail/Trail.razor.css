@@ -1,0 +1,97 @@
+﻿.timeline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 100%;
+    background-color: #6a1b9a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+    .timeline::before {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 4px;
+        height: 100%;
+        background: white;
+        border-radius: 2px;
+    }
+
+.timeline-item {
+    position: relative;
+    margin: 20px 0;
+}
+
+    .timeline-item::before {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-radius: 50%;
+        border: 2px solid #6a1b9a;
+        z-index: 2;
+    }
+
+.container {
+    width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+    .header h1 {
+        color: #6a1b9a;
+        margin: 0 0 30px 0;
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 0.3rem;
+    }
+
+.progress-bar {
+    position: relative;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    height: 20px;
+    margin: 10px 0 30px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 63%;
+    border-radius: 20px;
+    background: #6a1b9a;
+    position: relative;
+    overflow: hidden;
+}
+
+    .progress-bar-fill::after {
+        height: 100%;
+        width: 90%;
+        position: absolute;
+        background: linear-gradient(90deg, transparent, #ff4081, transparent);
+        left: -100%;
+        animation: gradient-animation ease-in infinite 5s;
+        content: '';
+    }
+
+@keyframes gradient-animation {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}

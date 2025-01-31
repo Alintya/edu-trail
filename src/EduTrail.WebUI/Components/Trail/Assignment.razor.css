@@ -1,0 +1,93 @@
+﻿.lesson {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f6fc;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+    .lesson h3 {
+        margin: 0;
+        font-size: 1em;
+    }
+
+    .lesson p {
+        font-size: 0.9em;
+        margin: 0;
+        line-height: 1.5rem;
+    }
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag {
+    background: #e1bee7;
+    color: #6a1b9a;
+    border-radius: 10px;
+    font-size: 0.8em;
+    position: relative;
+    padding: 8px 12px 8px 20px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.5s;
+}
+
+    .tag::before {
+        content: '#';
+        position: absolute;
+        left: 10px;
+    }
+
+.download {
+    display: flex;
+    gap: 10px;
+}
+
+    .download a {
+        color: #6a1b9a;
+        text-decoration: none;
+        font-size: 0.9em;
+        display: inline-block;
+        background: #6a1b9a;
+        border-radius: 10px;
+        color: white;
+        padding: 10px 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s;
+        position: relative;
+        overflow: hidden;
+    }
+
+.tag:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.download a span {
+    z-index: 1000;
+}
+
+.download a:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+    .download a:hover::before {
+        height: 100%;
+        width: 90%;
+        position: absolute;
+        background: linear-gradient(90deg, transparent, #ff40818c, transparent);
+        left: -100%;
+        content: '';
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .download a:hover::before {
+        animation: gradient-animation ease-in infinite 2s;
+    }

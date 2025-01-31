@@ -1,0 +1,48 @@
+﻿@implements IDisposable
+
+@inject NavigationManager NavigationManager
+
+<nav>
+    <div class="top-row">
+        <EduTrail.WebUI.Components.Layout.Branding />
+        <div class="top-row-nav">
+            <NavLink href="/classes">Classes</NavLink>
+            <NavLink href="/trails">Trails</NavLink>
+            <NavLink href="/trails">Accounts</NavLink>
+            
+            <AuthorizeView>
+                <NavLink class="" href="Account/Manage">
+                    @context.User.Identity?.Name
+                </NavLink>
+                <form action="Account/Logout" method="post">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                    <button type="submit" class="">
+                        Logout
+                    </button>
+                </form>
+            </AuthorizeView>
+        </div>
+    </div>
+</nav>
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
