@@ -43,4 +43,12 @@ public class Repository<T>(IDbContextFactory<ApplicationDbContext> contextFactor
         context.Set<T>().Remove(entity);
         await context.SaveChangesAsync();
     }
+
+    public virtual async Task DeleteByIdAsync(Guid id)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+        var entity = await context.Set<T>().FindAsync(id) ?? throw new EntityNotFoundException();
+        context.Set<T>().Remove(entity);
+        await context.SaveChangesAsync();
+    }
 }
