@@ -1,4 +1,8 @@
-﻿<div class="dropArea @dropClass">
+﻿@using EduTrail.Application.Interfaces
+
+@inject IFileManagementAppService FileAppService
+
+<div class="dropArea @dropClass">
     Drag and drop file or click to select.
     <InputFile disabled="@uploading"
                OnChange="OnInputFileChange"
@@ -28,12 +32,24 @@
             uploading = true;
             await InvokeAsync(StateHasChanged);
 
-            var stream = args.File.OpenReadStream();
-            string justFileName = Path.GetFileNameWithoutExtension(args.File.Name);
+            var file = args.File;
+            await using var stream = file.OpenReadStream();
 
-            // TODO: save
+            try
+            {
+                var result = await FileAppService.UploadFileAsync(
+                    stream,
+                    file.Name,
+                    file.ContentType,
+                    file.Size
+                );
 
-            //await ListFiles();
+                // Handle successful upload
+            }
+            catch (Exception ex)
+            {
+                // Handle error
+            }
 
             uploading = false;
 
