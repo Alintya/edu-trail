@@ -1,0 +1,86 @@
+﻿@page "/classes"
+@page "/class"
+
+@attribute [Authorize(Roles = "Admin, Teacher")]
+
+@rendermode InteractiveServer
+
+@using EduTrail.Application.Interfaces
+@using EduTrail.Domain.Entities
+@using EduTrail.Infrastructure.Identity
+@using Microsoft.AspNetCore.Identity
+
+@inject ITeacherAppService TeacherService
+@inject IAdminAppService AdminService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager NavigationManager
+
+<h1>Lerngruppen</h1>
+<AuthorizeView Roles="Teacher">
+	<Authorized>
+		<input @bind="NewClassName" placeholder="Name" />
+		<button @onclick="CreateClass">Lerngruppe erstellen</button>
+	</Authorized>
+</AuthorizeView>
+
+@if (Classes is not null)
+{
+	<ClassList Classes=Classes />
+}
+else
+{
+	<p>Loading...</p>
+}
+
+@code {
+	private List<Class>? Classes { get; set; }
+	private string NewClassName { get; set; } = string.Empty;
+	private Guid? teacherId;
+
+	protected override async Task OnInitializedAsync()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		if (authState.User.IsInRole("Admin"))
+		{
+			Classes = (await AdminService.GetAllClassesAsync()).ToList();
+		}
+
+		else if (authState.User.IsInRole("Teacher"))
+		{
+			ApplicationUser? appUser = authState.User is not null ? await UserManager.GetUserAsync(authState.User) : null;
+			if (appUser is null)
+			{
+				throw new InvalidOperationException("User not found.");
+			}
+			var teacherId = appUser.ProfileId;
+			if (!teacherId.HasValue)
+			{
+				throw new InvalidOperationException("Teacher profile not found");
+			}
+
+			Classes = (await TeacherService.GetClassesAsync(teacherId.Value)).ToList();
+		}
+	}
+
+	private async Task CreateClass()
+	{
+		Classes.Add(new Class { Name = NewClassName });
+		StateHasChanged();
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		ApplicationUser? appUser = authState.User is not null ? await UserManager.GetUserAsync(authState.User) : null;
+		var teacherId = appUser.ProfileId;
+		if (string.IsNullOrWhiteSpace(NewClassName))
+		{
+			return;
+		}
+		if (!teacherId.HasValue)
+		{
+			throw new InvalidOperationException("Teacher profile not found.");
+		}
+		await TeacherService.CreateClassAsync(NewClassName, teacherId.Value);
+
+		Classes = (await TeacherService.GetClassesAsync(teacherId.Value)).ToList();
+		StateHasChanged();
+	}
+}

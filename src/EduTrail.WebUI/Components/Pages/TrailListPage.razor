@@ -3,7 +3,7 @@
 @using EduTrail.Application.Interfaces
 @using EduTrail.Domain.Entities
 
-@inject ITrailAppService TrailService
+@inject IAdminAppService AdminService
 
 <h1>Trails</h1>
 
@@ -21,6 +21,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Trails = (await TrailService.GetAllTrailsAsync()).ToList();
+        Trails = (await AdminService.GetAllTrailsAsync()).ToList();
     }
 }
