@@ -29,8 +29,9 @@ public class DatabaseSeeder
 
         if (environment.IsDevelopment())
         {
-            parallelTasks.Add(SeedDataAsync(scopedServices));
+            //parallelTasks.Add(SeedDataAsync(scopedServices));
         }
+        parallelTasks.Add(SeedDataAsync(scopedServices));
 
         await SeedRolesAsync(scopedServices);
         await SeedUsersAsync(scopedServices);
@@ -119,6 +120,8 @@ public class DatabaseSeeder
                                     {
                                         Title = "Variables",
                                         OrderIndex = 1,
+                                        ContentType = AssignmentContentType.Pdf,
+                                        ContentUrl = "https://mint.tssract.studio/Struktogramme.pdf",
                                     }
                                 ],
                                 Tags =
