@@ -25,13 +25,13 @@ EduTrail is a Blazor web application designed to create and manage configurable 
 
 ## 🖼️ Screenshots
 
-### Student Dashboard
+### Trail
 
-![Student Dashboard](path/to/screenshot-student-dashboard.png)
+![Trail](trail.png)
 
-### Teacher Dashboard
+### Assignment Content
 
-![Teacher Dashboard](path/to/screenshot-teacher-dashboard.png)
+![Assignment Content](assignment_content.png)
 
 ---
 
