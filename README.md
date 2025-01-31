@@ -63,7 +63,17 @@ EduTrail is a Blazor web application designed to create and manage configurable 
    cd edu-trail
    ```
 
-3. Run
+3. Set default admin account credentials in `docker-compose.yml`
+
+   ```docker-compose
+   environment:
+      - EDUTRAIL_DefaultAdminUser__Email=admin@example.com
+      - EDUTRAIL_DefaultAdminUser__Password=MyAdminPassword123!
+   ```
+
+4. (Recommended) Adjust database user credentials
+
+5. Run
 
    ```bash
    docker compose up -d
