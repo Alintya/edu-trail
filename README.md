@@ -21,11 +21,6 @@ EduTrail is a Blazor web application designed to create and manage configurable 
 - **Assignment Management:** Create, assign, and review student submissions with detailed feedback
 - **Content Uploads:** Attach materials like videos, documents, and links to learning modules
 
-### General
-
-- **Clean Architecture:** Separation of concerns ensures scalability and maintainability
-- **Built with EF Core:** Smooth integration with relational databases for data persistence
-
 ---
 
 ## 🖼️ Screenshots
@@ -50,8 +45,8 @@ EduTrail is a Blazor web application designed to create and manage configurable 
 
 ### For Students
 
-1. **Access Trails:** View assigned learning trails and start modules
-2. **Track Progress:** Use the dashboard to keep track of completed modules and assignments
+1. **Access Trails:** View assigned learning trails and start tasks
+2. **Track Progress:** Use the dashboard to keep track of completed trails and assignments
 3. **Submit Assignments:** Upload your work through the portal
 
 ## 🚀 Quick Start
@@ -80,10 +75,10 @@ EduTrail is a Blazor web application designed to create and manage configurable 
 
 ### Prerequisites
 
-- .NET 9.0
+- .NET 9.0 (for UUIDv7)
 - Visual Studio 2022 or any IDE with .NET support
 - PostgreSQL Server or Docker (compose)
-- Preferably dotnet-ef for migrations (`dotnet tool install --global dotnet-ef`)
+- Preferably dotnet-ef for migration management (`dotnet tool install --global dotnet-ef`)
 
 ### Setup
 
@@ -147,7 +142,7 @@ EduTrail is a Blazor web application designed to create and manage configurable 
 
 ### Architecture
 
-EduTrail follows Clean Architecture principles:
+EduTrail tries to follow Clean Architecture principles:
 
 - **Domain Layer:** Core business logic and entities (e.g., `LearningTrail`, `TrailModule`)
 - **Application Layer:** Service interfaces, validation, and mapping
